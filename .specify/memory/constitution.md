@@ -1,19 +1,15 @@
 <!--
   Sync Impact Report:
-  - Version change: 1.2.0 → 2.0.0
+  - Version change: 2.0.0 → 2.1.0
   - List of modified principles (old title → new title if renamed):
-    - I. Logic Offloading (Server-side rendering) -> Updated to Go
-    - III. Data Integrity & Freshness -> Updated to Go
-    - IV. Resource-Conscious Image Delivery -> Updated to Go
-    - V. API-First Development -> Updated to Go
-    - VI. Tooling Consistency -> Updated for Go tooling (go mod, golangci-lint)
-    - VII. Modular & Unified Architecture -> Updated to remove Python framework references
+    - VII. Modular & Unified Architecture: Added single-binary requirement.
+    - Added VIII. Flexible Configuration: Flags and Environment variables.
   - Added sections: N/A
   - Removed sections: N/A
   - Templates requiring updates (✅ updated / ⚠ pending) with file paths:
     - ✅ .specify/memory/constitution.md
-    - ⚠ .specify/templates/plan-template.md
-    - ⚠ .specify/templates/tasks-template.md
+    - ✅ .specify/templates/plan-template.md
+    - ✅ .specify/templates/tasks-template.md
   - Follow-up TODOs if any placeholders intentionally deferred: N/A
 -->
 
@@ -46,8 +42,12 @@ Development MUST adhere to standard Go best practices. All dependencies MUST be 
 *Rationale*: Using a consistent, standard toolchain ensures developer productivity and maintains high code quality across the project.
 
 ### VII. Modular & Unified Architecture
-The source code MUST be organized into a clear hierarchy that separates presentation (API/CLI) from core logic. Every piece of functionality exposed via the API endpoint MUST also be accessible through the CLI. 
-*Rationale*: This ensures that the system is easily testable, maintainable, and verifiable in headless or automated environments without needing a full network stack.
+The source code MUST be organized into a clear hierarchy that separates presentation (API/CLI) from core logic. Every piece of functionality exposed via the API endpoint MUST also be accessible through the CLI. The release process MUST produce a single binary that contains both the HTTP server (e.g., via a `serve` subcommand) and all CLI functionality.
+*Rationale*: A single binary simplifies deployment and ensures that the system is easily testable, maintainable, and verifiable in any environment.
+
+### VIII. Flexible Configuration
+The application MUST be configurable via both command-line flags and environment variables. Flags MUST take precedence over environment variables, which MUST take precedence over default values.
+*Rationale*: This ensures the application can be easily configured across different deployment environments (e.g., local development, Docker, bare metal) without requiring code changes.
 
 ## Technical Stack
 
@@ -55,6 +55,7 @@ The source code MUST be organized into a clear hierarchy that separates presenta
 - **Package Management**: `go mod`
 - **Linting & Formatting**: `gofmt` and `golangci-lint` (Strict compliance required)
 - **CLI Framework**: `cobra` (spf13/cobra)
+- **Configuration**: `viper` (or equivalent supporting flags and env vars)
 - **API Framework**: standard library `net/http`
 - **Testing Framework**: standard library `testing` (Targeting >80% coverage)
 - **Client**: MicroPython on Raspberry Pi Pico W (Inky Frame)
@@ -63,11 +64,11 @@ The source code MUST be organized into a clear hierarchy that separates presenta
 ## Project Layout
 
 Following standard Go idioms, the codebase MUST be structured as follows:
-- `cmd/api/`: Main application entry point for the HTTP server.
-- `cmd/cli/`: Main application entry point for the Typer-equivalent CLI.
-- `internal/api/`: HTTP routes, handlers, and API-specific logic.
-- `internal/cli/`: Cobra command definitions and CLI-specific formatting.
+- `cmd/inky/`: The single application entry point.
+- `internal/api/`: HTTP handlers, routes, and API-specific logic.
+- `internal/cli/`: Cobra command definitions (including the root and subcommands).
 - `internal/core/`: Common business logic, data models, and image processing shared by both API and CLI.
+- `internal/config/`: Configuration loading logic (flags/env).
 - **Tests**: `*_test.go` files MUST be placed alongside the code they test in the same directory.
 
 ## Development Workflow
@@ -84,4 +85,4 @@ Following standard Go idioms, the codebase MUST be structured as follows:
 - Amendments require a version bump following semantic versioning (MAJOR for breaking changes, MINOR for additions, PATCH for clarifications).
 - All implementation plans must include a "Constitution Check" to verify alignment with these principles.
 
-**Version**: 2.0.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
+**Version**: 2.1.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05

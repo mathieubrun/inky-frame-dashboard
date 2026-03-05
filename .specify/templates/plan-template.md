@@ -18,7 +18,7 @@
 -->
 
 **Language/Version**: Go (Golang) 1.22+
-**Primary Dependencies**: net/http, spf13/cobra
+**Primary Dependencies**: net/http, spf13/cobra, viper
 **Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
 **Testing**: standard library testing
 **Target Platform**: Raspberry Pi Pico W (Inky Frame) + Linux Server (API)
@@ -51,12 +51,12 @@ specs/[###-feature]/
 
 ```text
 cmd/
-├── api/      # Main entry point for the HTTP server
-└── cli/      # Main entry point for the CLI tool
+└── inky/     # Single application entry point (CLI & HTTP Server)
 
 internal/
 ├── api/      # HTTP handlers, routes, and API-specific logic
-├── cli/      # Cobra command definitions and CLI formatting
+├── cli/      # Cobra command definitions (including subcommands)
+├── config/   # Configuration loading (flags, environment variables)
 └── core/     # Shared business logic and image processing
 ```
 
