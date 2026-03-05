@@ -1,17 +1,8 @@
 {
-	"name": "Python 3",
+	"name": "golang",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"charliermarsh.ruff",
-				"ms-python.python"
-			]
-		}
-	},
-	"postCreateCommand": "uv sync",
 	"features": {
 		"ghcr.io/devcontainers/features/node:1": {
 			"version": "lts",
