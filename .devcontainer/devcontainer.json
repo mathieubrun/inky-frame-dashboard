@@ -1,8 +1,6 @@
 {
 	"name": "golang",
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
+	"image": "mcr.microsoft.com/devcontainers/go:1-1.24-bookworm",
 	"features": {
 		"ghcr.io/devcontainers/features/node:1": {
 			"version": "lts",
@@ -10,5 +8,15 @@
 			"nvmVersion": "latest"
 		}
 	},
-	"forwardPorts": [8080]
+	"forwardPorts": [8080],
+	"postCreateCommand": "npm install -g @google/gemini-cli",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"mhutchie.git-graph",
+				"golang.go",
+				"google.gemini-cli-vscode-ide-companion"
+			]
+		}
+	}
 }
