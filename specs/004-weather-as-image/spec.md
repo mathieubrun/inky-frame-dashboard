@@ -43,12 +43,12 @@ As a developer, I want the generated image to be optimized for e-ink displays so
 
 **Why this priority**: The "Inky Frame" context implies specific hardware constraints. Optimization ensures the "image" requirement translates to a "usable" image.
 
-**Independent Test**: Can be tested by verifying the image uses a limited color palette (e.g., 7-color or grayscale) and maintains high contrast.
+Independent Test: Can be tested by verifying the image uses a limited 6-color palette (Red, Green, Blue, Yellow, Black, White) and maintains high contrast.
 
-**Acceptance Scenarios**:
+Acceptance Scenarios:
 
-1. **Given** an Inky Frame 7.3" target, **When** the image is generated, **Then** it matches the 800x480 resolution.
-2. **Given** a low-color display, **When** the image is viewed, **Then** text and icons are sharp and distinguishable.
+1. Given an Inky Frame 7.3" target, When the image is generated, Then it matches the 800x480 resolution.
+2. Given a 6-color display, When the image is viewed, Then text and icons are sharp and distinguishable.
 
 ---
 
@@ -68,7 +68,7 @@ As a developer, I want the generated image to be optimized for e-ink displays so
 - **FR-004**: System MUST support generating images at specific resolutions (Default: 800x480 for Inky Frame 7.3").
 - **FR-005**: The generated image MUST be accessible via a public HTTP endpoint.
 - **FR-006**: System MUST cache generated images for a configurable period to reduce redundant rendering.
-- **FR-007**: The image layout MUST be optimized for 7-color Inky e-ink displays.
+- **FR-007**: The image layout MUST be optimized for 6-color Inky e-ink displays (Red, Green, Blue, Yellow, Black, White).
 
 ### Key Entities *(include if feature involves data)*
 

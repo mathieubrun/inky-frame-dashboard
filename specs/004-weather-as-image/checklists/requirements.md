@@ -31,4 +31,4 @@
 
 ## Notes
 
-- All clarifications resolved: Target resolution 800x480, Display type 7-color e-ink.
+- All clarifications resolved: Target resolution 800x480, Display type 6-color e-ink (Red, Green, Blue, Yellow, Black, White).
