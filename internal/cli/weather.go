@@ -53,6 +53,79 @@ var weatherCmd = &cobra.Command{
 	},
 }
 
+var weatherImageCmd = &cobra.Command{
+	Use:   "image [location]",
+	Short: "Generate a weather forecast image for a location",
+	Args:  cobra.ExactArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		cfg, err := config.Load()
+		if err != nil {
+			core.ErrorLogger.Fatalf("Failed to load configuration: %v", err)
+		}
+
+		location := args[0]
+		width, _ := cmd.Flags().GetInt("width")
+		height, _ := cmd.Flags().GetInt("height")
+		output, _ := cmd.Flags().GetString("output")
+		palette, _ := cmd.Flags().GetString("palette")
+
+		useMock := viper.GetBool("weather_mock")
+
+		var provider weather.Provider
+		if useMock {
+			provider = weather.NewMockProvider()
+		} else {
+			provider = weather.NewOpenMeteoProvider()
+		}
+
+		// Wrap with cache
+		provider = weather.NewCachedProvider(provider, cfg.WeatherCacheDir, cfg.WeatherCacheTTL)
+
+		forecast, err := provider.GetForecast(location)
+		if err != nil {
+			core.ErrorLogger.Fatalf("Failed to retrieve weather for %s: %v", location, err)
+		}
+
+		// Initialize renderer and image cache
+		renderer := weather.NewWeatherImageRenderer(cfg.FontPath)
+		imageCache := weather.NewWeatherImageCache(cfg.WeatherImageCacheDir, cfg.WeatherImageCacheTTL)
+
+		cacheKey := imageCache.GenerateKey(location, width, height, palette)
+
+		// Try image cache first
+		var data []byte
+		if cachedData, err := imageCache.GetImage(cacheKey); err == nil {
+			core.InfoLogger.Printf("Using cached image for %s", cacheKey)
+			data = cachedData
+		} else {
+			core.InfoLogger.Printf("Generating new image for %s", location)
+			req := &weather.ImageRequest{
+				Location: location,
+				Width:    width,
+				Height:   height,
+				Palette:  palette,
+			}
+
+			renderedData, err := renderer.Render(forecast, req)
+			if err != nil {
+				core.ErrorLogger.Fatalf("Failed to render image: %v", err)
+			}
+			data = renderedData
+
+			// Save to cache
+			if err := imageCache.SaveImage(cacheKey, data); err != nil {
+				core.ErrorLogger.Printf("Failed to save image to cache: %v", err)
+			}
+		}
+
+		// Write to output file
+		if err := core.WriteFile(output, data); err != nil {
+			core.ErrorLogger.Fatalf("Failed to write output file: %v", err)
+		}
+		fmt.Printf("Weather image for %s saved to %s (%dx%d)\n", location, output, width, height)
+	},
+}
+
 func printJSON(forecast *weather.WeatherForecast) {
 	data, err := json.MarshalIndent(forecast, "", "  ")
 	if err != nil {
@@ -83,12 +156,19 @@ func printTable(forecast *weather.WeatherForecast) {
 
 func init() {
 	weatherCmd.Flags().StringP("city", "c", "", "Swiss city name")
-	weatherCmd.Flags().Bool("mock", false, "Use mock data")
+	weatherCmd.PersistentFlags().Bool("mock", false, "Use mock data")
 	weatherCmd.Flags().Bool("json", false, "Output in JSON format")
 
 	_ = viper.BindPFlag("weather_city", weatherCmd.Flags().Lookup("city"))
-	_ = viper.BindPFlag("weather_mock", weatherCmd.Flags().Lookup("mock"))
+	_ = viper.BindPFlag("weather_mock", weatherCmd.PersistentFlags().Lookup("mock"))
 	_ = viper.BindPFlag("weather_json", weatherCmd.Flags().Lookup("json"))
 
+	// Image flags
+	weatherImageCmd.Flags().IntP("width", "w", 800, "Image width")
+	weatherImageCmd.Flags().IntP("height", "H", 480, "Image height")
+	weatherImageCmd.Flags().StringP("output", "o", "weather.png", "Output filename")
+	weatherImageCmd.Flags().StringP("palette", "p", "spectra6", "Color palette (spectra6, grayscale)")
+
+	weatherCmd.AddCommand(weatherImageCmd)
 	rootCmd.AddCommand(weatherCmd)
 }

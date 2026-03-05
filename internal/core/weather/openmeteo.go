@@ -85,6 +85,7 @@ type weatherResponse struct {
 	Hourly struct {
 		Time                     []string  `json:"time"`
 		Temperature2m            []float64 `json:"temperature_2m"`
+		Weathercode              []int     `json:"weathercode"`
 		Windspeed10m             []float64 `json:"windspeed_10m"`
 		Winddirection10m         []float64 `json:"winddirection_10m"`
 		Precipitation            []float64 `json:"precipitation"`
@@ -92,10 +93,43 @@ type weatherResponse struct {
 	} `json:"hourly"`
 }
 
+func weatherCodeToCondition(code int) string {
+	switch code {
+	case 0:
+		return "Clear sky"
+	case 1, 2, 3:
+		return "Mainly clear, partly cloudy, and overcast"
+	case 45, 48:
+		return "Fog and depositing rime fog"
+	case 51, 53, 55:
+		return "Drizzle: Light, moderate, and dense intensity"
+	case 56, 57:
+		return "Freezing Drizzle: Light and dense intensity"
+	case 61, 63, 65:
+		return "Rain: Slight, moderate and heavy intensity"
+	case 66, 67:
+		return "Freezing Rain: Light and heavy intensity"
+	case 71, 73, 75:
+		return "Snow fall: Slight, moderate, and heavy intensity"
+	case 77:
+		return "Snow grains"
+	case 80, 81, 82:
+		return "Rain showers: Slight, moderate, and violent"
+	case 85, 86:
+		return "Snow showers slight and heavy"
+	case 95:
+		return "Thunderstorm: Slight or moderate"
+	case 96, 99:
+		return "Thunderstorm with slight and heavy hail"
+	default:
+		return "Unknown"
+	}
+}
+
 func (p *OpenMeteoProvider) fetchWeather(location *Location) (*WeatherForecast, error) {
 	// Use best_match models (automatically selects ICON-CH for Switzerland)
 	apiURL := fmt.Sprintf(
-		"%s?latitude=%.4f&longitude=%.4f&hourly=temperature_2m,windspeed_10m,winddirection_10m,precipitation,precipitation_probability&forecast_days=1",
+		"%s?latitude=%.4f&longitude=%.4f&hourly=temperature_2m,weathercode,windspeed_10m,winddirection_10m,precipitation,precipitation_probability&forecast_days=1",
 		p.forecastURL, location.Latitude, location.Longitude,
 	)
 
@@ -120,6 +154,7 @@ func (p *OpenMeteoProvider) fetchWeather(location *Location) (*WeatherForecast, 
 		hourly[i] = WeatherRecord{
 			Timestamp:         t,
 			Temperature:       data.Hourly.Temperature2m[i],
+			Condition:         weatherCodeToCondition(data.Hourly.Weathercode[i]),
 			WindSpeed:         data.Hourly.Windspeed10m[i],
 			WindDirection:     data.Hourly.Winddirection10m[i],
 			Precipitation:     data.Hourly.Precipitation[i],

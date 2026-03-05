@@ -6,6 +6,7 @@ import "time"
 type WeatherRecord struct {
 	Timestamp         time.Time `json:"timestamp"`
 	Temperature       float64   `json:"temperature"`
+	Condition         string    `json:"condition"`
 	WindSpeed         float64   `json:"wind_speed"`
 	WindDirection     float64   `json:"wind_direction"`
 	Precipitation     float64   `json:"precipitation"`
@@ -18,6 +19,14 @@ type Location struct {
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
 	Country   string  `json:"country"`
+}
+
+// ImageRequest represents the parameters for generating a weather image.
+type ImageRequest struct {
+	Location string `json:"location"`
+	Width    int    `json:"width"`
+	Height   int    `json:"height"`
+	Palette  string `json:"palette"`
 }
 
 // WeatherForecast represents the current weather and the 24-hour hourly forecast.
