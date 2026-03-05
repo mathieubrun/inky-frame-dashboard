@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "API Server (serve)",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/cmd/inky/main.go",
+      "args": ["serve"]
+    },
+    {
+      "name": "CLI Version (version)",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/cmd/inky/main.go",
+      "args": ["version"]
+    },
+    {
+      "name": "CLI (Custom Args)",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/cmd/inky/main.go",
+      "args": ["${command:AskForArgs}"]
+    },
+    {
+      "name": "Run Tests",
+      "type": "go",
+      "request": "launch",
+      "mode": "test",
+      "program": "${fileDirname}"
+    }
+  ]
+}
