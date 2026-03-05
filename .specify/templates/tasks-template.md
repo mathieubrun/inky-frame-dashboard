@@ -20,10 +20,8 @@ description: "Task list template for feature implementation"
 
 ## Path Conventions
 
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+- **Source Code**: `src/api/`, `src/cli/`, `src/core/`
+- **Tests**: `tests/api/`, `tests/cli/`, `tests/core/`
 
 <!-- 
   ============================================================================
@@ -48,7 +46,7 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan
+- [ ] T001 Create project structure per implementation plan (`src/{api,cli,core}`, `tests/{api,cli,core}`)
 - [ ] T002 Initialize Python project using `uv init` and add dependencies (FastAPI, Typer)
 - [ ] T003 [P] Configure `ruff` for linting and formatting (pyproject.toml)
 - [ ] T004 [P] Setup `pytest` and `pytest-cov` for testing infrastructure
@@ -63,12 +61,11 @@ description: "Task list template for feature implementation"
 
 Examples of foundational tasks (adjust based on your project):
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T005 [P] Implement core data models in `src/core/`
+- [ ] T006 [P] Implement shared image processing utilities in `src/core/`
+- [ ] T007 [P] Setup base API router in `src/api/`
+- [ ] T008 [P] Setup base CLI command in `src/cli/`
+- [ ] T009 Configure error handling and logging infrastructure
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -84,15 +81,15 @@ Examples of foundational tasks (adjust based on your project):
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T010 [P] [US1] Unit test for core logic in `tests/core/`
+- [ ] T011 [P] [US1] Integration test for API endpoint in `tests/api/`
+- [ ] T012 [P] [US1] Functional test for CLI command in `tests/cli/`
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T013 [P] [US1] Implement business logic in `src/core/[file].py`
+- [ ] T014 [US1] Implement API endpoint in `src/api/[file].py` (using core logic)
+- [ ] T015 [US1] Implement CLI command in `src/cli/[file].py` (using core logic)
 - [ ] T016 [US1] Add validation and error handling
 - [ ] T017 [US1] Add logging for user story 1 operations
 

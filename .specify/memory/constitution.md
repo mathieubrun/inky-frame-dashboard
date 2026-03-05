@@ -1,13 +1,15 @@
 <!--
   Sync Impact Report:
-  - Version change: 1.0.0 → 1.1.0
+  - Version change: 1.1.0 → 1.2.0
   - List of modified principles (old title → new title if renamed):
-    - Added VI. Tooling Consistency
+    - Added VII. Modular & Unified Architecture
   - Added sections:
-    - Technical Stack (merged/expanded from Constraints)
+    - Project Layout
   - Removed sections: N/A
   - Templates requiring updates (✅ updated / ⚠ pending) with file paths:
     - ✅ .specify/memory/constitution.md
+    - ✅ .specify/templates/plan-template.md
+    - ✅ .specify/templates/tasks-template.md
   - Follow-up TODOs if any placeholders intentionally deferred: N/A
 -->
 
@@ -39,6 +41,10 @@ All new dashboard features MUST start with an update to the Python API and its i
 Development MUST adhere to the project's selected modern Python toolchain. All dependencies MUST be managed via `uv`, and all code MUST be linted and formatted using `ruff`.
 *Rationale*: Using a consistent, modern, and fast toolchain ensures developer productivity and maintains high code quality across the project.
 
+### VII. Modular & Unified Architecture
+The source code MUST be organized into a clear hierarchy that separates presentation (API/CLI) from core logic. Every piece of functionality exposed via the FastAPI endpoint MUST also be accessible through the Typer CLI. 
+*Rationale*: This ensures that the system is easily testable, maintainable, and verifiable in headless or automated environments without needing a full network stack.
+
 ## Technical Stack
 
 - **Python Version**: 3.13 (Mandatory for server-side logic).
@@ -49,6 +55,14 @@ Development MUST adhere to the project's selected modern Python toolchain. All d
 - **Testing Framework**: `pytest` with `pytest-cov` (Targeting >80% coverage).
 - **Client**: MicroPython on Raspberry Pi Pico W (Inky Frame).
 - **Display**: 7-color E-Ink (Pimoroni Inky Frame).
+
+## Project Layout
+
+All Python source code MUST reside in the `src/` directory, and all tests MUST reside in the `tests/` directory. The structure is as follows:
+- `src/api/`: All FastAPI routes, schemas, and endpoint-specific logic.
+- `src/cli/`: All Typer command definitions and CLI-specific formatting.
+- `src/core/`: Common business logic, data models, and image processing shared by both API and CLI.
+- `tests/`: Organized to match the `src/` structure (e.g., `tests/core/`, `tests/api/`).
 
 ## Development Workflow
 
@@ -64,4 +78,4 @@ Development MUST adhere to the project's selected modern Python toolchain. All d
 - Amendments require a version bump following semantic versioning (MAJOR for breaking changes, MINOR for additions, PATCH for clarifications).
 - All implementation plans must include a "Constitution Check" to verify alignment with these principles.
 
-**Version**: 1.1.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
+**Version**: 1.2.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
