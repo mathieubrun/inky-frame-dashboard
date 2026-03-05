@@ -58,6 +58,53 @@ func (p *CachedProvider) GetForecast(city string) (*WeatherForecast, error) {
 	return forecast, nil
 }
 
+// WeatherImageCache handles caching of generated weather images.
+type WeatherImageCache struct {
+	cacheDir string
+	ttl      time.Duration
+}
+
+// NewWeatherImageCache creates a new WeatherImageCache.
+func NewWeatherImageCache(cacheDir string, ttl time.Duration) *WeatherImageCache {
+	return &WeatherImageCache{
+		cacheDir: cacheDir,
+		ttl:      ttl,
+	}
+}
+
+// GenerateKey creates a unique key for a weather image based on request parameters.
+func (c *WeatherImageCache) GenerateKey(city string, width, height int, palette string) string {
+	normalized := strings.ToLower(strings.TrimSpace(city))
+	normalized = strings.ReplaceAll(normalized, " ", "_")
+	return fmt.Sprintf("%s_%dx%d_%s", normalized, width, height, palette)
+}
+
+// GetImage returns a cached image if it exists and is fresh.
+func (c *WeatherImageCache) GetImage(key string) ([]byte, error) {
+	filename := filepath.Join(c.cacheDir, key+".png")
+	
+	info, err := os.Stat(filename)
+	if err != nil {
+		return nil, err
+	}
+	
+	if time.Since(info.ModTime()) > c.ttl {
+		return nil, fmt.Errorf("cache entry for image %s is stale", key)
+	}
+	
+	return os.ReadFile(filename)
+}
+
+// SaveImage saves an image to the cache.
+func (c *WeatherImageCache) SaveImage(key string, data []byte) error {
+	if err := os.MkdirAll(c.cacheDir, 0755); err != nil {
+		return err
+	}
+	
+	filename := filepath.Join(c.cacheDir, key+".png")
+	return os.WriteFile(filename, data, 0644)
+}
+
 func (p *CachedProvider) getCacheFilename(city string) string {
 	normalized := strings.ToLower(strings.TrimSpace(city))
 	normalized = strings.ReplaceAll(normalized, " ", "_")

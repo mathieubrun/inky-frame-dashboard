@@ -30,6 +30,7 @@ func (p *MockProvider) GetForecast(city string) (*WeatherForecast, error) {
 	current := WeatherRecord{
 		Timestamp:         now,
 		Temperature:       10.0 + r.Float64()*10.0,
+		Condition:         "Clear sky",
 		WindSpeed:         5.0 + r.Float64()*15.0,
 		WindDirection:     r.Float64() * 360.0,
 		Precipitation:     r.Float64() * 5.0,
@@ -42,6 +43,7 @@ func (p *MockProvider) GetForecast(city string) (*WeatherForecast, error) {
 		hourly[i] = WeatherRecord{
 			Timestamp:         ts,
 			Temperature:       current.Temperature + (r.Float64()*4.0 - 2.0),
+			Condition:         "Clear sky",
 			WindSpeed:         current.WindSpeed + (r.Float64()*5.0 - 2.5),
 			WindDirection:     current.WindDirection + (r.Float64()*20.0 - 10.0),
 			Precipitation:     r.Float64() * 2.0,

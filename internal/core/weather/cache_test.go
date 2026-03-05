@@ -75,3 +75,42 @@ func TestGetCacheFilename(t *testing.T) {
 		}
 	}
 }
+
+func TestWeatherImageCache(t *testing.T) {
+	tempDir, err := os.MkdirTemp("", "weather_image_cache_test")
+	if err != nil {
+		t.Fatalf("failed to create temp dir: %v", err)
+	}
+	defer func() { _ = os.RemoveAll(tempDir) }()
+
+	c := NewWeatherImageCache(tempDir, 1*time.Minute)
+	key := c.GenerateKey("Zurich", 800, 480, "spectra6")
+	data := []byte("fake-png-data")
+
+	// Test Save
+	if err := c.SaveImage(key, data); err != nil {
+		t.Fatalf("SaveImage failed: %v", err)
+	}
+
+	// Test Get
+	got, err := c.GetImage(key)
+	if err != nil {
+		t.Fatalf("GetImage failed: %v", err)
+	}
+	if string(got) != string(data) {
+		t.Errorf("expected %s, got %s", data, got)
+	}
+
+	// Test Stale
+	c.ttl = -1 * time.Second
+	_, err = c.GetImage(key)
+	if err == nil {
+		t.Error("expected error for stale cache entry, got nil")
+	}
+
+	// Test Missing
+	_, err = c.GetImage("missing")
+	if err == nil {
+		t.Error("expected error for missing cache entry, got nil")
+	}
+}
