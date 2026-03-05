@@ -14,42 +14,42 @@ We follow an incremental delivery approach, starting with the core weather engin
 
 ## Phase 1: Setup
 
-- [ ] T001 Create directory structure for weather core logic in `internal/core/weather/`
-- [ ] T002 Add weather-related configuration parameters (Cache Dir, TTL, Mock toggle) to `internal/config/config.go`
+- [X] T001 Create directory structure for weather core logic in `internal/core/weather/`
+- [X] T002 Add weather-related configuration parameters (Cache Dir, TTL, Mock toggle) to `internal/config/config.go`
 
 ## Phase 2: Foundational Weather Engine
 
-- [ ] T003 Define weather data structures (`WeatherRecord`, `WeatherForecast`, `Location`) in `internal/core/weather/types.go`
-- [ ] T004 Define the `Provider` interface in `internal/core/weather/provider.go`
-- [ ] T005 [P] Implement `MockProvider` in `internal/core/weather/mock.go` returning randomized data
-- [ ] T006 [P] Implement file-based caching logic in `internal/core/weather/cache.go` for `WeatherForecast` persistence
-- [ ] T007 Implement `OpenMeteoProvider` in `internal/core/weather/openmeteo.go` with geocoding and ICON-CH model fetching
+- [X] T003 Define weather data structures (`WeatherRecord`, `WeatherForecast`, `Location`) in `internal/core/weather/types.go`
+- [X] T004 Define the `Provider` interface in `internal/core/weather/provider.go`
+- [X] T005 [P] Implement `MockProvider` in `internal/core/weather/mock.go` returning randomized data
+- [X] T006 [P] Implement file-based caching logic in `internal/core/weather/cache.go` for `WeatherForecast` persistence
+- [X] T007 Implement `OpenMeteoProvider` in `internal/core/weather/openmeteo.go` with geocoding and ICON-CH model fetching
 
 ## Phase 3: User Story 1 - Retrieve Swiss Weather via CLI (Priority: P1)
 
 **Goal**: Users can fetch weather via `inky weather --city "City"`
 **Test Criteria**: `inky weather --city "Zurich"` displays a table with temp, wind, and rain details.
 
-- [ ] T008 [US1] Create the `weather` command definition in `internal/cli/weather.go`
-- [ ] T009 [US1] Implement CLI output formatting (table and JSON) in `internal/cli/weather.go`
-- [ ] T010 [US1] Integrate `internal/core/weather` providers with the `weather` command in `internal/cli/weather.go`
-- [ ] T011 [US1] Verify CLI functionality using both `--mock` and live providers
+- [X] T008 [US1] Create the `weather` command definition in `internal/cli/weather.go`
+- [X] T009 [US1] Implement CLI output formatting (table and JSON) in `internal/cli/weather.go`
+- [X] T010 [US1] Integrate `internal/core/weather` providers with the `weather` command in `internal/cli/weather.go`
+- [X] T011 [US1] Verify CLI functionality using both `--mock` and live providers
 
 ## Phase 4: User Story 2 - Retrieve Swiss Weather via API (Priority: P1)
 
 **Goal**: Dashboard can fetch weather via `/weather/swiss?city=City`
 **Test Criteria**: `GET /weather/swiss?city=Geneva` returns `200 OK` with JSON weather data.
 
-- [ ] T012 [US2] Implement the weather handler function in `internal/api/weather.go`
-- [ ] T013 [US2] Register the `/weather/swiss` route in `internal/api/server.go`
-- [ ] T014 [P] [US2] Create Bruno test file at `bruno/Get Swiss Weather.bru` with response assertions
-- [ ] T015 [US2] Verify API response matches the JSON contract defined in `contracts/api.md`
+- [X] T012 [US2] Implement the weather handler function in `internal/api/weather.go`
+- [X] T013 [US2] Register the `/weather/swiss` route in `internal/api/server.go`
+- [X] T014 [P] [US2] Create Bruno test file at `bruno/Get Swiss Weather.bru` with response assertions
+- [X] T015 [US2] Verify API response matches the JSON contract defined in `contracts/api.md`
 
 ## Phase 5: Polish & Cross-cutting
 
-- [ ] T016 Ensure `golangci-lint` passes for all new files
-- [ ] T017 [P] Add unit tests for caching logic in `internal/core/weather/cache_test.go`
-- [ ] T018 [P] Add unit tests for geocoding logic in `internal/core/weather/openmeteo_test.go`
+- [X] T016 Ensure `golangci-lint` passes for all new files
+- [X] T017 [P] Add unit tests for caching logic in `internal/core/weather/cache_test.go`
+- [X] T018 [P] Add unit tests for geocoding logic in `internal/core/weather/openmeteo_test.go`
 
 ## Dependencies
 

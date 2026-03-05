@@ -9,3 +9,10 @@
 
 # Go build/vendor
 vendor/
+# Inky Frame Dashboard
+.inky/cache
+.env*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

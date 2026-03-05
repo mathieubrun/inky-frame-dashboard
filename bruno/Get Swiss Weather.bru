@@ -1,0 +1,18 @@
+meta {
+  name: Get Swiss Weather
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/weather/swiss?city=Zurich&mock=true
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.location.city: eq Zurich
+  res.body.current.temperature: isNumber 
+  res.body.source: eq Mock Provider
+}
