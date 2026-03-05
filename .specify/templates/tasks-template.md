@@ -8,7 +8,7 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: Comprehensive tests are REQUIRED for all new features and bug fixes as per the Project Constitution.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -49,7 +49,7 @@ description: "Task list template for feature implementation"
 - [ ] T001 Create project structure per implementation plan (`cmd/inky`, `internal/{api,cli,core,config}`)
 - [ ] T002 Initialize Go project using `go mod init` and add dependencies (spf13/cobra, spf13/viper)
 - [ ] T003 [P] Configure `golangci-lint` for linting
-- [ ] T004 [P] Setup base test utilities for `go test`
+- [ ] T004 [P] Setup base test utilities for `go test` and coverage reporting
 
 ---
 
@@ -78,7 +78,7 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 1 (REQUIRED) ⚠️
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
@@ -86,14 +86,15 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T012 [P] [US1] Integration test for API handler in `internal/api/[file]_test.go`
 - [ ] T013 [P] [US1] Create Bruno file for API testing in `bruno/[endpoint].bru`
 - [ ] T014 [P] [US1] Functional test for CLI command in `internal/cli/[file]_test.go`
+- [ ] T015 [P] [US1] Verify coverage >80% for US1 logic (`go test -cover`)
 
 ### Implementation for User Story 1
 
-- [ ] T014 [P] [US1] Implement business logic in `internal/core/[file].go`
-- [ ] T015 [US1] Implement API handler in `internal/api/[file].go` (using core logic)
-- [ ] T016 [US1] Implement CLI command in `internal/cli/[file].go` (using core logic)
-- [ ] T017 [US1] Add validation and error handling
-- [ ] T018 [US1] Add logging for user story 1 operations
+- [ ] T016 [P] [US1] Implement business logic in `internal/core/[file].go`
+- [ ] T017 [US1] Implement API handler in `internal/api/[file].go` (using core logic)
+- [ ] T018 [US1] Implement CLI command in `internal/cli/[file].go` (using core logic)
+- [ ] T019 [US1] Add validation and error handling
+- [ ] T020 [US1] Add logging for user story 1 operations
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -105,17 +106,18 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 2 (REQUIRED) ⚠️
 
-- [ ] T019 [P] [US2] Unit test for core logic in `internal/core/[file]_test.go`
-- [ ] T020 [P] [US2] Integration test for API handler in `internal/api/[file]_test.go`
+- [ ] T021 [P] [US2] Unit test for core logic in `internal/core/[file]_test.go`
+- [ ] T022 [P] [US2] Integration test for API handler in `internal/api/[file]_test.go`
+- [ ] T023 [P] [US2] Verify coverage >80% for US2 logic
 
 ### Implementation for User Story 2
 
-- [ ] T021 [P] [US2] Implement business logic in `internal/core/[file].go`
-- [ ] T022 [US2] Implement API handler in `internal/api/[file].go` (using core logic)
-- [ ] T023 [US2] Implement CLI command in `internal/cli/[file].go` (using core logic)
-- [ ] T024 [US2] Integrate with User Story 1 components (if needed)
+- [ ] T024 [P] [US2] Implement business logic in `internal/core/[file].go`
+- [ ] T025 [US2] Implement API handler in `internal/api/[file].go` (using core logic)
+- [ ] T026 [US2] Implement CLI command in `internal/cli/[file].go` (using core logic)
+- [ ] T027 [US2] Integrate with User Story 1 components (if needed)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -127,16 +129,17 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 3 (REQUIRED) ⚠️
 
-- [ ] T025 [P] [US3] Unit test for core logic in `internal/core/[file]_test.go`
-- [ ] T026 [P] [US3] Integration test for API handler in `internal/api/[file]_test.go`
+- [ ] T028 [P] [US3] Unit test for core logic in `internal/core/[file]_test.go`
+- [ ] T029 [P] [US3] Integration test for API handler in `internal/api/[file]_test.go`
+- [ ] T030 [P] [US3] Verify coverage >80% for US3 logic
 
 ### Implementation for User Story 3
 
-- [ ] T027 [P] [US3] Implement business logic in `internal/core/[file].go`
-- [ ] T028 [US3] Implement API handler in `internal/api/[file].go` (using core logic)
-- [ ] T029 [US3] Implement CLI command in `internal/cli/[file].go` (using core logic)
+- [ ] T031 [P] [US3] Implement business logic in `internal/core/[file].go`
+- [ ] T032 [US3] Implement API handler in `internal/api/[file].go` (using core logic)
+- [ ] T033 [US3] Implement CLI command in `internal/cli/[file].go` (using core logic)
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -153,7 +156,7 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX [P] Documentation updates in docs/
 - [ ] TXXX Code cleanup and refactoring
 - [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in `internal/core/*_test.go`
+- [ ] TXXX [P] Final verification of project-wide test coverage (>80%) and report generation
 - [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation
 

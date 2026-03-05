@@ -20,7 +20,7 @@
 **Language/Version**: Go (Golang) 1.22+
 **Primary Dependencies**: net/http, spf13/cobra, viper
 **Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: standard library testing
+**Testing**: standard library testing (Required, >80% coverage)
 **Target Platform**: Raspberry Pi Pico W (Inky Frame) + Linux Server (API)
 **Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]  
 **Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  

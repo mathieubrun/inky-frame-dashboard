@@ -1,13 +1,14 @@
 <!--
   Sync Impact Report:
-  - Version change: 2.2.0 → 2.3.0
+  - Version change: 2.3.0 → 2.4.0
   - List of modified principles (old title → new title if renamed):
-    - Added IX. API Testing with Bruno
+    - Added X. Mandatory Testing & Coverage
   - Added sections: N/A
   - Removed sections: N/A
   - Templates requiring updates (✅ updated / ⚠ pending) with file paths:
     - ✅ .specify/memory/constitution.md
     - ✅ .specify/templates/tasks-template.md
+    - ✅ .specify/templates/plan-template.md
   - Follow-up TODOs if any placeholders intentionally deferred: N/A
 -->
 
@@ -51,6 +52,10 @@ The application MUST be configurable via both command-line flags and environment
 Every API endpoint MUST include a corresponding Bruno configuration file (`.bru`) in the `bruno/` directory for automated and manual testing. These files MUST include assertions to verify the correctness of the response (status code, body structure, and values).
 *Rationale*: Using Bruno ensures that API contracts are easily verifiable and provides a consistent way for developers to test and document endpoints.
 
+### X. Mandatory Testing & Coverage
+All new features and bug fixes MUST be accompanied by comprehensive unit and integration tests using the standard Go `testing` package. Code coverage reports MUST be generated and reviewed during the development process to ensure that all critical paths are verified. A minimum test coverage of 80% is REQUIRED for all new logic.
+*Rationale*: High test coverage and reproducible test reports ensure long-term stability, facilitate refactoring, and provide confidence in the correctness of the dashboard's logic.
+
 ## Technical Stack
 
 - **Language**: Go (Golang) 1.22+
@@ -79,7 +84,7 @@ Following standard Go idioms, the codebase MUST be structured as follows:
 
 - **Dependency Management**: Use `go get` for new dependencies and `go mod tidy` to clean up the module file.
 - **Linting**: Run `golangci-lint run` and ensure code is formatted with `gofmt` before every commit.
-- **Testing**: The Golang API MUST include unit tests for data parsing and layout generation. Run `go test ./... -cover` to verify coverage.
+- **Testing**: The Golang API MUST include unit tests for data parsing and layout generation. Run `go test ./... -cover` to verify coverage and produce reports.
 - **API Testing**: Every new or modified API endpoint MUST be verified using its corresponding Bruno file.
 - **Image validation**: Layout changes SHOULD be validated using local tests and previewed as standard images before being integrated into the API.
 - **Contract verification**: Every change to the API that affects the image output MUST be manually verified with a sample image simulating the Inky display constraints.
@@ -90,4 +95,4 @@ Following standard Go idioms, the codebase MUST be structured as follows:
 - Amendments require a version bump following semantic versioning (MAJOR for breaking changes, MINOR for additions, PATCH for clarifications).
 - All implementation plans must include a "Constitution Check" to verify alignment with these principles.
 
-**Version**: 2.3.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
+**Version**: 2.4.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
