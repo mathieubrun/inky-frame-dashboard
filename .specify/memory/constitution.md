@@ -1,14 +1,13 @@
 <!--
   Sync Impact Report:
-  - Version change: 2.0.0 → 2.1.0
+  - Version change: 2.1.0 → 2.2.0
   - List of modified principles (old title → new title if renamed):
-    - VII. Modular & Unified Architecture: Added single-binary requirement.
-    - Added VIII. Flexible Configuration: Flags and Environment variables.
+    - I. Logic Offloading: Removed weather/calendar specific references.
+    - III. Data Integrity & Freshness: Removed weather specific example.
   - Added sections: N/A
   - Removed sections: N/A
   - Templates requiring updates (✅ updated / ⚠ pending) with file paths:
     - ✅ .specify/memory/constitution.md
-    - ✅ .specify/templates/plan-template.md
     - ✅ .specify/templates/tasks-template.md
   - Follow-up TODOs if any placeholders intentionally deferred: N/A
 -->
@@ -18,7 +17,7 @@
 ## Core Principles
 
 ### I. Logic Offloading (Server-side rendering)
-The Inky Frame MUST be treated as a "dumb" display. All complex logic, including data fetching from weather/calendar APIs and image layout generation, MUST be performed by the Golang API. The Inky Frame SHOULD only make a simple HTTP request to receive a ready-to-display image.
+The Inky Frame MUST be treated as a "dumb" display. All complex logic, including data fetching from external APIs and image layout generation, MUST be performed by the Golang API. The Inky Frame SHOULD only make a simple HTTP request to receive a ready-to-display image.
 *Rationale*: This minimizes the power-hungry processing and Wi-Fi on-time for the battery-powered Inky Frame, while simplifying the MicroPython code on the device.
 
 ### II. Energy-First Lifecycle
@@ -26,7 +25,7 @@ Development MUST prioritize battery longevity. The Inky Frame MUST enter deep sl
 *Rationale*: Inky Frames are typically battery-operated; inefficient code leads to frequent charging and a poor user experience.
 
 ### III. Data Integrity & Freshness
-The Golang API MUST ensure that the returned image contains accurate and up-to-date information. If an upstream data source (e.g., weather API) is unavailable, the image SHOULD clearly indicate the stale state or the time of last successful update to avoid misleading the user.
+The Golang API MUST ensure that the returned image contains accurate and up-to-date information. If an upstream data source (e.g., external service) is unavailable, the image SHOULD clearly indicate the stale state or the time of last successful update to avoid misleading the user.
 *Rationale*: A dashboard is only useful if its information is trustworthy and its current state is transparent.
 
 ### IV. Resource-Conscious Image Delivery
@@ -85,4 +84,4 @@ Following standard Go idioms, the codebase MUST be structured as follows:
 - Amendments require a version bump following semantic versioning (MAJOR for breaking changes, MINOR for additions, PATCH for clarifications).
 - All implementation plans must include a "Constitution Check" to verify alignment with these principles.
 
-**Version**: 2.1.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
+**Version**: 2.2.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05

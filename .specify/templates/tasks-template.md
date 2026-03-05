@@ -106,15 +106,15 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T019 [P] [US2] Unit test for core logic in `internal/core/[file]_test.go`
+- [ ] T020 [P] [US2] Integration test for API handler in `internal/api/[file]_test.go`
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+- [ ] T021 [P] [US2] Implement business logic in `internal/core/[file].go`
+- [ ] T022 [US2] Implement API handler in `internal/api/[file].go` (using core logic)
+- [ ] T023 [US2] Implement CLI command in `internal/cli/[file].go` (using core logic)
+- [ ] T024 [US2] Integrate with User Story 1 components (if needed)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -128,14 +128,14 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T025 [P] [US3] Unit test for core logic in `internal/core/[file]_test.go`
+- [ ] T026 [P] [US3] Integration test for API handler in `internal/api/[file]_test.go`
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T027 [P] [US3] Implement business logic in `internal/core/[file].go`
+- [ ] T028 [US3] Implement API handler in `internal/api/[file].go` (using core logic)
+- [ ] T029 [US3] Implement CLI command in `internal/cli/[file].go` (using core logic)
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -152,7 +152,7 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX [P] Documentation updates in docs/
 - [ ] TXXX Code cleanup and refactoring
 - [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
+- [ ] TXXX [P] Additional unit tests (if requested) in `internal/core/*_test.go`
 - [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation
 
@@ -198,12 +198,12 @@ Examples of foundational tasks (adjust based on your project):
 
 ```bash
 # Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
+Task: "Unit test for core logic in `internal/core/[file]_test.go`"
+Task: "Integration test for API handler in `internal/api/[file]_test.go`"
 
-# Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
+# Launch all implementations for User Story 1 together:
+Task: "Implement business logic in `internal/core/[file].go`"
+Task: "Implement API handler in `internal/api/[file].go`"
 ```
 
 ---
