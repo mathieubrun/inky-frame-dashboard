@@ -1,50 +1,62 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+  Sync Impact Report:
+  - Version change: N/A → 1.0.0
+  - List of modified principles (old title → new title if renamed):
+    - [PRINCIPLE_1_NAME] → Logic Offloading (Server-side rendering)
+    - [PRINCIPLE_2_NAME] → Energy-First Lifecycle
+    - [PRINCIPLE_3_NAME] → Data Integrity & Freshness
+    - [PRINCIPLE_4_NAME] → Resource-Conscious Image Delivery
+    - [PRINCIPLE_5_NAME] → API-First Development
+  - Added sections:
+    - Technical Constraints
+    - Development Workflow
+  - Removed sections: N/A
+  - Templates requiring updates (✅ updated / ⚠ pending) with file paths:
+    - ✅ .specify/memory/constitution.md (initial adoption)
+  - Follow-up TODOs if any placeholders intentionally deferred: N/A
+-->
+
+# Inky Frame Dashboard Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Logic Offloading (Server-side rendering)
+The Inky Frame MUST be treated as a "dumb" display. All complex logic, including data fetching from weather/calendar APIs and image layout generation, MUST be performed by the Python API. The Inky Frame SHOULD only make a simple HTTP request to receive a ready-to-display image.
+*Rationale*: This minimizes the power-hungry processing and Wi-Fi on-time for the battery-powered Inky Frame, while simplifying the MicroPython code on the device.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Energy-First Lifecycle
+Development MUST prioritize battery longevity. The Inky Frame MUST enter deep sleep between scheduled updates. Network requests SHOULD be consolidated and timeouts MUST be strictly enforced to prevent excessive battery drain during connectivity issues.
+*Rationale*: Inky Frames are typically battery-operated; inefficient code leads to frequent charging and a poor user experience.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Data Integrity & Freshness
+The Python API MUST ensure that the returned image contains accurate and up-to-date information. If an upstream data source (e.g., weather API) is unavailable, the image SHOULD clearly indicate the stale state or the time of last successful update to avoid misleading the user.
+*Rationale*: A dashboard is only useful if its information is trustworthy and its current state is transparent.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Resource-Conscious Image Delivery
+Images delivered to the Inky Frame MUST be optimized for its specific display capabilities (e.g., 7-color palette, fixed dimensions). The Python API SHOULD handle all dithering and color mapping to ensure the best possible visual quality with minimal client-side decoding.
+*Rationale*: Offloading image processing ensures faster refresh times and higher quality visuals on the E-Ink display without overtaxing the MicroPython environment.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. API-First Development
+All new dashboard features MUST start with an update to the Python API and its image generation logic. The communication contract between the Inky Frame and the API MUST be stable and ideally versioned to prevent breaking the client during server-side updates.
+*Rationale*: Decoupling the data presentation from the display hardware allows for rapid iteration and testing without requiring frequent firmware updates to the Inky Frame.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Technical Constraints
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- **Client**: MicroPython on Raspberry Pi Pico W (Inky Frame).
+- **Server**: Python 3.10+ (FastAPI recommended).
+- **Display**: 7-color E-Ink (Pimoroni Inky Frame).
+- **Protocol**: HTTP/HTTPS returning BMP or PNG optimized for the Inky palette.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- **Image validation**: Layout changes SHOULD be validated using local Python scripts and previewed as standard images before being integrated into the API.
+- **Testing**: The Python API MUST include unit tests for data parsing and layout generation.
+- **Contract verification**: Every change to the API that affects the image output MUST be manually verified with a sample image simulating the Inky display constraints.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This constitution supersedes all other development practices in this project.
+- Amendments require a version bump following semantic versioning (MAJOR for breaking changes, MINOR for additions, PATCH for clarifications).
+- All implementation plans must include a "Constitution Check" to verify alignment with these principles.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
