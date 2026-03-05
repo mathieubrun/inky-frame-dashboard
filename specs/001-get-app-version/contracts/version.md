@@ -1,31 +1,21 @@
-# API Contract: Get App Version
+# Contracts: Get App Version
 
-## GET /version
+## API Contract
 
-Retrieve the application's current version.
+### GET /version
+- **Request**: `GET /version`
+- **Headers**: `Accept: application/json`
+- **Response**: `200 OK`
+- **Body**:
+  ```json
+  {
+    "version": "1.0.0"
+  }
+  ```
 
-**Response**: `200 OK`
-**Content-Type**: `application/json`
+## CLI Contract
 
-### Body
-```json
-{
-  "version": "1.0.0"
-}
-```
-
-## CLI Interface
-
-### Subcommand: `version`
-**Command**: `inky version`
-**Output**: `1.0.0` (Plain text)
-**Exit Codes**:
-- `0`: Success
-- `1`: Failure
-
-### Global Flag: `--version`
-**Command**: `inky --version`
-**Output**: `1.0.0` (Plain text)
-**Exit Codes**:
-- `0`: Success
-- `1`: Failure
+### `inky version`
+- **Command**: `inky version`
+- **Output**: `1.0.0` (followed by newline)
+- **Exit Code**: `0` on success.

@@ -1,19 +1,21 @@
 # Research: Get App Version
 
-## Decision: Version Storage & Injection
-- **Decision**: Hardcode the version string in `internal/config/version.go`.
-- **Rationale**: User preference for simplicity and ease of maintenance.
-- **Alternatives considered**: Injected via `ldflags` at build time (rejected per user choice).
+## Decision: Version Storage
+- **Decision**: Centralize version in `internal/config/version.go`.
+- **Rationale**: User request for easy maintenance.
+- **Alternatives considered**: Build tags (rejected), separate VERSION file (rejected).
 
-## Decision: CLI Framework Integration
-- **Decision**: Use `spf13/cobra` to implement both the `version` subcommand and the `--version` flag on the root command.
-- **Rationale**: Industry standard for Go CLIs, already part of the project's technical stack.
+## Decision: CLI Command Implementation
+- **Decision**: Use `spf13/cobra` subcommands.
+- **Rationale**: Matches project stack.
+- **Implementation**: `versionCmd` added to the root command in `cmd/inky/`.
 
-## Decision: API Implementation
-- **Decision**: Use standard library `net/http` for the `/version` endpoint.
-- **Rationale**: Minimal overhead for a simple metadata endpoint, aligns with project principles.
+## Decision: API Handler
+- **Decision**: Standard `http.HandlerFunc`.
+- **Rationale**: Lightweight, no external router needed for this simple requirement.
+- **Payload**: `{"version": "X.Y.Z"}`.
 
-## Best Practices: Versioning
-- Follow strict Semantic Versioning 2.0.0.
-- Ensure the version string is a single source of truth used by both CLI and API handlers.
-- Standard access logging for the API endpoint as requested.
+## Best Practices
+- Ensure `http.ResponseWriter` sets `Content-Type: application/json`.
+- CLI output should go to `Stdout`.
+- Use standard access logging for the API endpoint as per `FR-012`.

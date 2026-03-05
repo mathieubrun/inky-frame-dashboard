@@ -1,10 +1,10 @@
 # Implementation Plan: Get App Version
 
-**Branch**: `003-get-app-version` | **Date**: 2026-03-05 | **Spec**: [/specs/003-get-app-version/spec.md](spec.md)
+**Branch**: `003-get-app-version` | **Date**: 2026-03-05 | **Spec**: [specs/003-get-app-version/spec.md](spec.md)
 **Input**: Feature specification from `/specs/003-get-app-version/spec.md`
 
 ## Summary
-Implement a unified way to retrieve the application version through both a CLI command (`inky version` and `inky --version`) and an HTTP API endpoint (`GET /version`). The version will be a hardcoded semantic string in `internal/config/version.go`.
+Implement a unified way to retrieve the application version through a CLI subcommand (`inky version`) and an HTTP API endpoint (`GET /version`). The version will be a hardcoded semantic string in `internal/config/version.go`. Following user refinement, the global flag `--version` is removed.
 
 ## Technical Context
 
@@ -15,20 +15,20 @@ Implement a unified way to retrieve the application version through both a CLI c
 **Target Platform**: Raspberry Pi Pico W (Inky Frame) + Linux Server (API)
 **Project Type**: CLI + web-service
 **Performance Goals**: CLI response < 100ms, API response < 50ms
-**Constraints**: Single binary release, raw numbers only (X.Y.Z), hardcoded in `internal/config/version.go`, port configurable (default 8080), public API access, standard access logging.
+**Constraints**: Single binary release, raw numbers only (X.Y.Z), hardcoded in `internal/config/version.go`, port configurable (default 8080), public API access, standard access logging. Global flag `--version` is explicitly excluded.
 **Scale/Scope**: Minimal metadata retrieval.
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-- **I. Logic Offloading**: ✅ N/A (this is a metadata feature)
-- **II. Energy-First Lifecycle**: ✅ Fast responses minimize wake time.
-- **III. Data Integrity & Freshness**: ✅ N/A (static version)
-- **IV. Resource-Conscious Image Delivery**: ✅ N/A (JSON/Text response)
-- **V. API-First Development**: ✅ Defined /version contract.
+- **I. Logic Offloading**: ✅ Metadata retrieval is lightweight.
+- **II. Energy-First Lifecycle**: ✅ Fast responses minimize wake time for clients.
+- **III. Data Integrity & Freshness**: ✅ Hardcoded version ensures consistency.
+- **IV. Resource-Conscious Image Delivery**: ✅ N/A (JSON/Text response).
+- **V. API-First Development**: ✅ Defined /version contract in spec.
 - **VI. Tooling Consistency**: ✅ Using standard Go tools.
-- **VII. Modular & Unified Architecture**: ✅ Unified single binary with CLI and API parity.
+- **VII. Modular & Unified Architecture**: ✅ Unified single binary with CLI subcommand parity. Refined to subcommand only per user request.
 - **VIII. Flexible Configuration**: ✅ Configurable port via flags/env.
 
 ## Project Structure
@@ -38,12 +38,12 @@ Implement a unified way to retrieve the application version through both a CLI c
 ```text
 specs/003-get-app-version/
 ├── plan.md              # This file
-├── research.md          # Research on version injection and cobra integration
-├── data-model.md        # VersionInfo entity
-├── quickstart.md        # How to test CLI/API version retrieval
-├── contracts/           # API and CLI interface definitions
+├── research.md          # Phase 0 output
+├── data-model.md        # Phase 1 output
+├── quickstart.md        # Phase 1 output
+├── contracts/           # Phase 1 output
 │   └── version.md
-└── tasks.md             # Implementation tasks (Phase 2 output)
+└── tasks.md             # Phase 2 output
 ```
 
 ### Source Code (repository root)
@@ -51,18 +51,18 @@ specs/003-get-app-version/
 ```text
 cmd/
 └── inky/
-    └── main.go          # Root command configuration
+    └── main.go          # CLI entry point updated
 
 internal/
 ├── config/
 │   └── version.go       # Hardcoded version string
 ├── cli/
-│   └── version.go       # version subcommand and root flag implementation
+│   └── version.go       # version subcommand implementation
 └── api/
     └── version.go       # GET /version handler
 ```
 
-**Structure Decision**: Version string is centralized in `internal/config/version.go` to serve as the single source of truth for both the CLI and API layers.
+**Structure Decision**: Version string is centralized in `internal/config/version.go`. The CLI uses `cobra` subcommands. The API uses a standard `http.Handler`.
 
 ## Complexity Tracking
 

@@ -3,12 +3,11 @@
 ## Entities
 
 ### VersionInfo
-Represents the application's version information.
+Represents the application version metadata.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| version | string | Semantic version string (X.Y.Z) |
+| version | string | Semantic version string (e.g., "1.0.0") |
 
-## Constraints
-- Version MUST follow SemVer 2.0.0.
-- Version MUST be raw numbers only (no 'v' prefix).
+## Persistence
+- Static hardcoded value in `internal/config/version.go`.
