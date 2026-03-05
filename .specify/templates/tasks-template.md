@@ -49,8 +49,9 @@ description: "Task list template for feature implementation"
 **Purpose**: Project initialization and basic structure
 
 - [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
+- [ ] T002 Initialize Python project using `uv init` and add dependencies (FastAPI, Typer)
+- [ ] T003 [P] Configure `ruff` for linting and formatting (pyproject.toml)
+- [ ] T004 [P] Setup `pytest` and `pytest-cov` for testing infrastructure
 
 ---
 

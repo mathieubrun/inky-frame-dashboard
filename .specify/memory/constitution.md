@@ -1,18 +1,13 @@
 <!--
   Sync Impact Report:
-  - Version change: N/A → 1.0.0
+  - Version change: 1.0.0 → 1.1.0
   - List of modified principles (old title → new title if renamed):
-    - [PRINCIPLE_1_NAME] → Logic Offloading (Server-side rendering)
-    - [PRINCIPLE_2_NAME] → Energy-First Lifecycle
-    - [PRINCIPLE_3_NAME] → Data Integrity & Freshness
-    - [PRINCIPLE_4_NAME] → Resource-Conscious Image Delivery
-    - [PRINCIPLE_5_NAME] → API-First Development
+    - Added VI. Tooling Consistency
   - Added sections:
-    - Technical Constraints
-    - Development Workflow
+    - Technical Stack (merged/expanded from Constraints)
   - Removed sections: N/A
   - Templates requiring updates (✅ updated / ⚠ pending) with file paths:
-    - ✅ .specify/memory/constitution.md (initial adoption)
+    - ✅ .specify/memory/constitution.md
   - Follow-up TODOs if any placeholders intentionally deferred: N/A
 -->
 
@@ -40,17 +35,27 @@ Images delivered to the Inky Frame MUST be optimized for its specific display ca
 All new dashboard features MUST start with an update to the Python API and its image generation logic. The communication contract between the Inky Frame and the API MUST be stable and ideally versioned to prevent breaking the client during server-side updates.
 *Rationale*: Decoupling the data presentation from the display hardware allows for rapid iteration and testing without requiring frequent firmware updates to the Inky Frame.
 
-## Technical Constraints
+### VI. Tooling Consistency
+Development MUST adhere to the project's selected modern Python toolchain. All dependencies MUST be managed via `uv`, and all code MUST be linted and formatted using `ruff`.
+*Rationale*: Using a consistent, modern, and fast toolchain ensures developer productivity and maintains high code quality across the project.
 
+## Technical Stack
+
+- **Python Version**: 3.13 (Mandatory for server-side logic).
+- **Package Management**: `uv` (Required for performance and reproducibility).
+- **Linting & Formatting**: `ruff` (Strict compliance required).
+- **CLI Framework**: `typer`.
+- **API Framework**: `fastapi`.
+- **Testing Framework**: `pytest` with `pytest-cov` (Targeting >80% coverage).
 - **Client**: MicroPython on Raspberry Pi Pico W (Inky Frame).
-- **Server**: Python 3.10+ (FastAPI recommended).
 - **Display**: 7-color E-Ink (Pimoroni Inky Frame).
-- **Protocol**: HTTP/HTTPS returning BMP or PNG optimized for the Inky palette.
 
 ## Development Workflow
 
+- **Dependency Management**: Use `uv add` for new dependencies and `uv lock` to maintain deterministic environments.
+- **Linting**: Run `ruff check` and `ruff format` before every commit.
+- **Testing**: The Python API MUST include unit tests for data parsing and layout generation. Run `pytest --cov` to verify coverage.
 - **Image validation**: Layout changes SHOULD be validated using local Python scripts and previewed as standard images before being integrated into the API.
-- **Testing**: The Python API MUST include unit tests for data parsing and layout generation.
 - **Contract verification**: Every change to the API that affects the image output MUST be manually verified with a sample image simulating the Inky display constraints.
 
 ## Governance
@@ -59,4 +64,4 @@ All new dashboard features MUST start with an update to the Python API and its i
 - Amendments require a version bump following semantic versioning (MAJOR for breaking changes, MINOR for additions, PATCH for clarifications).
 - All implementation plans must include a "Constitution Check" to verify alignment with these principles.
 
-**Version**: 1.0.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
+**Version**: 1.1.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
