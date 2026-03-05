@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+
+	"inky-frame-dashboard/internal/core"
 )
 
 // CachedProvider wraps another Provider and caches results in files.
@@ -34,13 +36,19 @@ func (p *CachedProvider) GetForecast(city string) (*WeatherForecast, error) {
 	if err == nil {
 		// Check if the cache is fresh
 		if time.Since(forecast.FetchedAt) < p.ttl {
+			core.InfoLogger.Printf("Cache hit for city: %s", city)
 			return forecast, nil
 		}
+		core.InfoLogger.Printf("Cache entry for city: %s is stale", city)
+	} else {
+		core.InfoLogger.Printf("Cache miss for city: %s", city)
 	}
 
 	// Fetch from the underlying provider
+	core.InfoLogger.Printf("Fetching weather data for city: %s from provider", city)
 	forecast, err = p.provider.GetForecast(city)
 	if err != nil {
+		core.ErrorLogger.Printf("Failed to fetch weather data for city: %s: %v", city, err)
 		return nil, err
 	}
 
@@ -73,15 +81,21 @@ func (p *CachedProvider) loadFromCache(filename string) (*WeatherForecast, error
 func (p *CachedProvider) saveToCache(filename string, forecast *WeatherForecast) {
 	// Ensure the cache directory exists
 	if err := os.MkdirAll(filepath.Dir(filename), 0755); err != nil {
+		core.ErrorLogger.Printf("Failed to create cache directory %s: %v", filepath.Dir(filename), err)
 		return
 	}
 
 	data, err := json.MarshalIndent(forecast, "", "  ")
 	if err != nil {
+		core.ErrorLogger.Printf("Failed to marshal weather data for city %s: %v", forecast.Location.City, err)
 		return
 	}
 
-	_ = os.WriteFile(filename, data, 0644)
+	if err := os.WriteFile(filename, data, 0644); err != nil {
+		core.ErrorLogger.Printf("Failed to write cache file %s: %v", filename, err)
+	} else {
+		core.InfoLogger.Printf("Saved weather data to cache for city: %s", forecast.Location.City)
+	}
 }
 
 // Ensure CachedProvider implements Provider.
