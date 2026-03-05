@@ -20,8 +20,8 @@ description: "Task list template for feature implementation"
 
 ## Path Conventions
 
-- **Source Code**: `src/api/`, `src/cli/`, `src/core/`
-- **Tests**: `tests/api/`, `tests/cli/`, `tests/core/`
+- **Source Code**: `cmd/api/`, `cmd/cli/`, `internal/api/`, `internal/cli/`, `internal/core/`
+- **Tests**: Next to source files as `*_test.go` (e.g., `internal/core/[file]_test.go`)
 
 <!-- 
   ============================================================================
@@ -46,10 +46,10 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan (`src/{api,cli,core}`, `tests/{api,cli,core}`)
-- [ ] T002 Initialize Python project using `uv init` and add dependencies (FastAPI, Typer)
-- [ ] T003 [P] Configure `ruff` for linting and formatting (pyproject.toml)
-- [ ] T004 [P] Setup `pytest` and `pytest-cov` for testing infrastructure
+- [ ] T001 Create project structure per implementation plan (`cmd/{api,cli}`, `internal/{api,cli,core}`)
+- [ ] T002 Initialize Go project using `go mod init` and add dependencies (spf13/cobra)
+- [ ] T003 [P] Configure `golangci-lint` for linting
+- [ ] T004 [P] Setup base test utilities for `go test`
 
 ---
 
@@ -61,10 +61,10 @@ description: "Task list template for feature implementation"
 
 Examples of foundational tasks (adjust based on your project):
 
-- [ ] T005 [P] Implement core data models in `src/core/`
-- [ ] T006 [P] Implement shared image processing utilities in `src/core/`
-- [ ] T007 [P] Setup base API router in `src/api/`
-- [ ] T008 [P] Setup base CLI command in `src/cli/`
+- [ ] T005 [P] Implement core data models in `internal/core/`
+- [ ] T006 [P] Implement shared image processing utilities in `internal/core/`
+- [ ] T007 [P] Setup base HTTP router in `internal/api/` and `cmd/api/main.go`
+- [ ] T008 [P] Setup base Cobra command root in `internal/cli/` and `cmd/cli/main.go`
 - [ ] T009 Configure error handling and logging infrastructure
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
@@ -81,15 +81,15 @@ Examples of foundational tasks (adjust based on your project):
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T010 [P] [US1] Unit test for core logic in `tests/core/`
-- [ ] T011 [P] [US1] Integration test for API endpoint in `tests/api/`
-- [ ] T012 [P] [US1] Functional test for CLI command in `tests/cli/`
+- [ ] T010 [P] [US1] Unit test for core logic in `internal/core/[file]_test.go`
+- [ ] T011 [P] [US1] Integration test for API handler in `internal/api/[file]_test.go`
+- [ ] T012 [P] [US1] Functional test for CLI command in `internal/cli/[file]_test.go`
 
 ### Implementation for User Story 1
 
-- [ ] T013 [P] [US1] Implement business logic in `src/core/[file].py`
-- [ ] T014 [US1] Implement API endpoint in `src/api/[file].py` (using core logic)
-- [ ] T015 [US1] Implement CLI command in `src/cli/[file].py` (using core logic)
+- [ ] T013 [P] [US1] Implement business logic in `internal/core/[file].go`
+- [ ] T014 [US1] Implement API handler in `internal/api/[file].go` (using core logic)
+- [ ] T015 [US1] Implement CLI command in `internal/cli/[file].go` (using core logic)
 - [ ] T016 [US1] Add validation and error handling
 - [ ] T017 [US1] Add logging for user story 1 operations
 

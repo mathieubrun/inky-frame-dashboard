@@ -17,10 +17,10 @@
   the iteration process.
 -->
 
-**Language/Version**: Python 3.13 (Managed by `uv`)
-**Primary Dependencies**: FastAPI, Typer, Ruff
+**Language/Version**: Go (Golang) 1.22+
+**Primary Dependencies**: net/http, spf13/cobra
 **Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: pytest with pytest-cov
+**Testing**: standard library testing
 **Target Platform**: Raspberry Pi Pico W (Inky Frame) + Linux Server (API)
 **Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]  
 **Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
@@ -50,15 +50,14 @@ specs/[###-feature]/
 ### Source Code (repository root)
 
 ```text
-src/
-├── api/      # FastAPI endpoints and logic
-├── cli/      # Typer CLI commands
-└── core/     # Shared business logic and image processing
+cmd/
+├── api/      # Main entry point for the HTTP server
+└── cli/      # Main entry point for the CLI tool
 
-tests/
-├── api/      # API integration tests
-├── cli/      # CLI functional tests
-└── core/     # Core logic unit tests
+internal/
+├── api/      # HTTP handlers, routes, and API-specific logic
+├── cli/      # Cobra command definitions and CLI formatting
+└── core/     # Shared business logic and image processing
 ```
 
 **Structure Decision**: [Document the selected structure and reference the real
