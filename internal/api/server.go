@@ -2,27 +2,30 @@ package api
 
 import (
 	"fmt"
+	"inky-frame-dashboard/internal/config"
 	"inky-frame-dashboard/internal/core"
 	"net/http"
 )
 
 // Server represents the HTTP server.
 type Server struct {
-	Addr string
+	Config *config.Config
 }
 
 // NewServer creates a new server instance.
-func NewServer(port int) *Server {
+func NewServer(cfg *config.Config) *Server {
 	return &Server{
-		Addr: fmt.Sprintf(":%d", port),
+		Config: cfg,
 	}
 }
 
 // Start starts the HTTP server.
 func (s *Server) Start() error {
+	addr := fmt.Sprintf(":%d", s.Config.Port)
 	mux := http.NewServeMux()
 	mux.HandleFunc("/version", VersionHandler)
+	mux.HandleFunc("/weather/swiss", s.WeatherHandler)
 
-	core.InfoLogger.Printf("Starting server on %s", s.Addr)
-	return http.ListenAndServe(s.Addr, mux)
+	core.InfoLogger.Printf("Starting server on %s", addr)
+	return http.ListenAndServe(addr, mux)
 }

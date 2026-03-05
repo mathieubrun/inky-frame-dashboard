@@ -18,7 +18,7 @@ var serveCmd = &cobra.Command{
 			core.ErrorLogger.Fatalf("Failed to load configuration: %v", err)
 		}
 
-		server := api.NewServer(cfg.Port)
+		server := api.NewServer(cfg)
 		if err := server.Start(); err != nil {
 			core.ErrorLogger.Fatalf("Failed to start server: %v", err)
 		}
