@@ -10,7 +10,7 @@
 # Go build/vendor
 vendor/
 # Inky Frame Dashboard
-.inky/cache
+.inky
 .env*
 .DS_Store
 Thumbs.db
