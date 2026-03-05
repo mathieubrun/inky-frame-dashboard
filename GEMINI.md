@@ -24,10 +24,10 @@ tests/
 Go (Golang) 1.22+: Follow standard conventions
 
 ## Recent Changes
+- 004-weather-as-image: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper
 - 003-swiss-weather-forecast: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper
 - 003-get-app-version: Added Go (Golang) 1.22+ (Managed by `go mod`) + standard library `net/http`, `spf13/cobra`, `spf13/viper`
 
-- 003-get-app-version: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
