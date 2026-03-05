@@ -11,7 +11,7 @@
 - Q: Should the JSON response be a simple object with a "version" key, or a raw JSON string? → A: JSON Object: `{"version": "1.0.0"}`
 - Q: Should the version string include a lowercase 'v' prefix (e.g., `v1.0.0`) or be the raw numbers only (e.g., `1.0.0`)? → A: Raw numbers only (e.g., `1.0.0`)
 - Q: Should the `/version` API endpoint be publicly accessible, or should it require authentication? → A: Publicly accessible (no auth required)
-- Q: Should successful requests to the `/version` API endpoint be recorded in the application logs? → A: Do not log successful requests (errors only)
+- Q: Should successful requests to the `/version` API endpoint be recorded in the application logs? → A: Log every request (standard behavior)
 - Q: Which exit codes should the CLI `version` command return to indicate its execution status? → A: 0 on success, 1 on failure
 
 ## User Scenarios & Testing *(mandatory)*
@@ -67,7 +67,7 @@ As a remote user or monitoring system, I want to retrieve the application versio
 - **FR-009**: The API MUST listen on a port configurable via flags or environment variables (default: 8080).
 - **FR-010**: The application version MUST be hardcoded in a dedicated configuration file (e.g., `internal/config/version.go`) for easy maintenance.
 - **FR-011**: The `/version` API endpoint MUST be publicly accessible without authentication.
-- **FR-012**: The application MUST NOT log successful requests to the `/version` endpoint to standard output or log files.
+- **FR-012**: The application MUST log all requests to the `/version` endpoint following standard access logging practices.
 - **FR-013**: The CLI version command MUST return exit code 0 on success and 1 on failure.
 
 ### Key Entities *(include if feature involves data)*
