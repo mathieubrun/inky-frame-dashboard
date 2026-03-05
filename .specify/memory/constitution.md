@@ -1,9 +1,8 @@
 <!--
   Sync Impact Report:
-  - Version change: 2.1.0 → 2.2.0
+  - Version change: 2.2.0 → 2.3.0
   - List of modified principles (old title → new title if renamed):
-    - I. Logic Offloading: Removed weather/calendar specific references.
-    - III. Data Integrity & Freshness: Removed weather specific example.
+    - Added IX. API Testing with Bruno
   - Added sections: N/A
   - Removed sections: N/A
   - Templates requiring updates (✅ updated / ⚠ pending) with file paths:
@@ -48,6 +47,10 @@ The source code MUST be organized into a clear hierarchy that separates presenta
 The application MUST be configurable via both command-line flags and environment variables. Flags MUST take precedence over environment variables, which MUST take precedence over default values.
 *Rationale*: This ensures the application can be easily configured across different deployment environments (e.g., local development, Docker, bare metal) without requiring code changes.
 
+### IX. API Testing with Bruno
+Every API endpoint MUST include a corresponding Bruno configuration file (`.bru`) in the `bruno/` directory for automated and manual testing. These files MUST include assertions to verify the correctness of the response (status code, body structure, and values).
+*Rationale*: Using Bruno ensures that API contracts are easily verifiable and provides a consistent way for developers to test and document endpoints.
+
 ## Technical Stack
 
 - **Language**: Go (Golang) 1.22+
@@ -57,6 +60,7 @@ The application MUST be configurable via both command-line flags and environment
 - **Configuration**: `viper` (or equivalent supporting flags and env vars)
 - **API Framework**: standard library `net/http`
 - **Testing Framework**: standard library `testing` (Targeting >80% coverage)
+- **API Testing**: Bruno (`.bru` files in `bruno/` directory)
 - **Client**: MicroPython on Raspberry Pi Pico W (Inky Frame)
 - **Display**: 7-color E-Ink (Pimoroni Inky Frame)
 
@@ -68,6 +72,7 @@ Following standard Go idioms, the codebase MUST be structured as follows:
 - `internal/cli/`: Cobra command definitions (including the root and subcommands).
 - `internal/core/`: Common business logic, data models, and image processing shared by both API and CLI.
 - `internal/config/`: Configuration loading logic (flags/env).
+- `bruno/`: Bruno collection and environment files for API testing.
 - **Tests**: `*_test.go` files MUST be placed alongside the code they test in the same directory.
 
 ## Development Workflow
@@ -75,6 +80,7 @@ Following standard Go idioms, the codebase MUST be structured as follows:
 - **Dependency Management**: Use `go get` for new dependencies and `go mod tidy` to clean up the module file.
 - **Linting**: Run `golangci-lint run` and ensure code is formatted with `gofmt` before every commit.
 - **Testing**: The Golang API MUST include unit tests for data parsing and layout generation. Run `go test ./... -cover` to verify coverage.
+- **API Testing**: Every new or modified API endpoint MUST be verified using its corresponding Bruno file.
 - **Image validation**: Layout changes SHOULD be validated using local tests and previewed as standard images before being integrated into the API.
 - **Contract verification**: Every change to the API that affects the image output MUST be manually verified with a sample image simulating the Inky display constraints.
 
@@ -84,4 +90,4 @@ Following standard Go idioms, the codebase MUST be structured as follows:
 - Amendments require a version bump following semantic versioning (MAJOR for breaking changes, MINOR for additions, PATCH for clarifications).
 - All implementation plans must include a "Constitution Check" to verify alignment with these principles.
 
-**Version**: 2.2.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
+**Version**: 2.3.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-03-05
