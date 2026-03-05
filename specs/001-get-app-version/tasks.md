@@ -22,10 +22,10 @@ description: "Task list for Get App Version implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan (`cmd/inky`, `internal/{api,cli,core,config}`)
-- [ ] T002 Initialize Go project using `go mod init` and add dependencies (spf13/cobra, spf13/viper)
-- [ ] T003 [P] Configure `golangci-lint` for linting
-- [ ] T004 [P] Setup base test utilities for `go test`
+- [X] T001 Create project structure per implementation plan (`cmd/inky`, `internal/{api,cli,core,config}`)
+- [X] T002 Initialize Go project using `go mod init` and add dependencies (spf13/cobra, spf13/viper)
+- [X] T003 [P] Configure `golangci-lint` for linting
+- [X] T004 [P] Setup base test utilities for `go test`
 
 ---
 
@@ -35,10 +35,10 @@ description: "Task list for Get App Version implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 [P] Create `internal/config/version.go` with hardcoded SemVer string `1.0.0`
-- [ ] T006 [P] Implement shared `VersionInfo` entity in `internal/core/version.go` (if needed for shared logic)
-- [ ] T007 [P] Setup base Cobra command root in `internal/cli/root.go` and `cmd/inky/main.go`
-- [ ] T008 Configure error handling and logging infrastructure
+- [X] T005 [P] Create `internal/config/version.go` with hardcoded SemVer string `1.0.0`
+- [X] T006 [P] Implement shared `VersionInfo` entity in `internal/core/version.go` (if needed for shared logic)
+- [X] T007 [P] Setup base Cobra command root in `internal/cli/root.go` and `cmd/inky/main.go`
+- [X] T008 Configure error handling and logging infrastructure
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -52,10 +52,10 @@ description: "Task list for Get App Version implementation"
 
 ### Implementation for User Story 1
 
-- [ ] T009 [P] [US1] Create unit test for CLI version output in `internal/cli/version_test.go`
-- [ ] T010 [US1] Implement `version` subcommand in `internal/cli/version.go` using `internal/config/version.go`
-- [ ] T011 [US1] Register `version` subcommand in Root command within `internal/cli/root.go`
-- [ ] T012 [US1] Verify `inky version` prints raw numbers and returns exit code 0
+- [X] T009 [P] [US1] Create unit test for CLI version output in `internal/cli/version_test.go`
+- [X] T010 [US1] Implement `version` subcommand in `internal/cli/version.go` using `internal/config/version.go`
+- [X] T011 [US1] Register `version` subcommand in Root command within `internal/cli/root.go`
+- [X] T012 [US1] Verify `inky version` prints raw numbers and returns exit code 0
 
 **Checkpoint**: At this point, User Story 1 is fully functional and testable independently.
 
@@ -69,12 +69,12 @@ description: "Task list for Get App Version implementation"
 
 ### Implementation for User Story 2
 
-- [ ] T013 [P] [US2] Create integration test for `/version` endpoint in `internal/api/version_test.go`
-- [ ] T014 [US2] Implement `VersionHandler` in `internal/api/version.go` returning JSON object with version
-- [ ] T015 [US2] Setup HTTP server in `internal/api/server.go` and register `/version` route
-- [ ] T016 [US2] Implement `serve` subcommand in `internal/cli/serve.go` to start the API server
-- [ ] T017 [US2] Configure port retrieval via `viper` (flags/env) in `internal/config/config.go`
-- [ ] T018 [US2] Add standard access logging for `/version` endpoint
+- [X] T013 [P] [US2] Create integration test for `/version` endpoint in `internal/api/version_test.go`
+- [X] T014 [US2] Implement `VersionHandler` in `internal/api/version.go` returning JSON object with version
+- [X] T015 [US2] Setup HTTP server in `internal/api/server.go` and register `/version` route
+- [X] T016 [US2] Implement `serve` subcommand in `internal/cli/serve.go` to start the API server
+- [X] T017 [US2] Configure port retrieval via `viper` (flags/env) in `internal/config/config.go`
+- [X] T018 [US2] Add standard access logging for `/version` endpoint
 
 **Checkpoint**: At this point, User Stories 1 AND 2 work independently.
 
@@ -84,10 +84,10 @@ description: "Task list for Get App Version implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T019 [P] Documentation updates in `README.md` regarding version retrieval
-- [ ] T020 Code cleanup and refactoring
-- [ ] T021 [P] Ensure no global `--version` flag exists in `spf13/cobra` default configuration
-- [ ] T022 Run `quickstart.md` validation
+- [X] T019 [P] Documentation updates in `README.md` regarding version retrieval
+- [X] T020 Code cleanup and refactoring
+- [X] T021 [P] Ensure no global `--version` flag exists in `spf13/cobra` default configuration
+- [X] T022 Run `quickstart.md` validation
 
 ---
 
