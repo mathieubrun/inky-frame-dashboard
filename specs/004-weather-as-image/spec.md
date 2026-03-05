@@ -24,16 +24,16 @@ As a dashboard device (e.g., Inky Frame), I want to fetch a pre-rendered image o
 
 ### User Story 2 - Localized Weather Image (Priority: P2)
 
-As a user, I want to receive a weather image for a specific location so that I can see the forecast for my area.
+As a user, I want to receive a weather image by providing a city name or postcode so that I can easily see the forecast for my specific area without knowing geocoordinates.
 
-**Why this priority**: Users need relevant local data. Without location support, the image has limited utility for a global audience.
+**Why this priority**: Users need a simple way to define their location. Supporting names and postcodes is significantly more user-friendly than requiring raw coordinates.
 
-**Independent Test**: Can be tested by requesting images for two different cities and verifying the content (city name and temperature) differs accordingly.
+**Independent Test**: Can be tested by requesting images using a city name (e.g., "Zurich") and a postcode (e.g., "8001") and verifying the content displays the correct local weather.
 
 **Acceptance Scenarios**:
 
-1. **Given** a specific set of coordinates, **When** the image is requested, **Then** the generated image displays the weather for that location.
-2. **Given** an invalid location, **When** requested, **Then** the system returns a meaningful error image or a standard error response.
+1. **Given** a valid city name or postcode, **When** the image is requested, **Then** the generated image displays the weather for that specific location.
+2. **Given** an ambiguous or invalid location string, **When** requested, **Then** the system returns a clear error image or the most likely match.
 
 ---
 
@@ -67,14 +67,15 @@ Acceptance Scenarios:
 - **FR-003**: The image MUST include current temperature, a weather icon, and the location name.
 - **FR-004**: System MUST support generating images at specific resolutions (Default: 800x480 for Inky Frame 7.3").
 - **FR-005**: The generated image MUST be accessible via a public HTTP endpoint.
-- **FR-006**: System MUST cache generated images for a configurable period to reduce redundant rendering.
-- **FR-007**: The image layout MUST be optimized for 6-color Inky e-ink displays (Red, Green, Blue, Yellow, Black, White).
+- **FR-006**: System MUST support location lookup via city name or postcode.
+- **FR-007**: System MUST cache generated images for a configurable period to reduce redundant rendering.
+- **FR-008**: The image layout MUST be optimized for 6-color Inky e-ink displays (Red, Green, Blue, Yellow, Black, White).
 
 ### Key Entities *(include if feature involves data)*
 
 - **Weather Image**: A binary file representing the visual state of weather data at a point in time.
 - **Render Template**: A set of rules defining how weather data points (temperature, icons) are positioned and styled on the image canvas.
-- **Location**: Geocoordinates or city name used to fetch the source weather data.
+- **Location Identifier**: A string representing a city name or a postcode used to resolve weather data.
 
 ## Success Criteria *(mandatory)*
 
