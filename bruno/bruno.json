@@ -1,0 +1,8 @@
+{
+    "version": "1",
+    "name": "inky-frame-dashboard",
+    "type": "collection",
+    "ignore": [
+        ".git"
+    ]
+}
