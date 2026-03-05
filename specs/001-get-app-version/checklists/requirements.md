@@ -1,4 +1,4 @@
-# Specification Quality Checklist: Get App Version
+# Specification Quality Checklist: Get App Version (Refined CLI)
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-03-05
@@ -31,5 +31,5 @@
 
 ## Notes
 
-- Items marked incomplete require spec updates before `/speckit.clarify` or `/speckit.plan`
+- Refinement: Global flag `--version` removed in favor of `version` subcommand only.
 - Validated on 2026-03-05. All criteria met.

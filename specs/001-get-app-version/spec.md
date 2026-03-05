@@ -1,9 +1,9 @@
-# Feature Specification: Get App Version
+# Feature Specification: Get App Version (Refined CLI)
 
 **Feature Branch**: `001-get-app-version`  
 **Created**: 2026-03-05  
 **Status**: Draft  
-**Input**: User description: "I want to be able to get the inky-dashboard app version"
+**Input**: User description: "I want to be able to get the inky-dashboard app version. for the cli, remove the global flag, keep only the command"
 
 ## Clarifications
 
@@ -13,20 +13,21 @@
 - Q: Should the `/version` API endpoint be publicly accessible, or should it require authentication? → A: Publicly accessible (no auth required)
 - Q: Should successful requests to the `/version` API endpoint be recorded in the application logs? → A: Log every request (standard behavior)
 - Q: Which exit codes should the CLI `version` command return to indicate its execution status? → A: 0 on success, 1 on failure
+- Q: Should the CLI version be accessible via a global flag or only a subcommand? → A: Dedicated `version` subcommand only (removed global flag)
 
 ## User Scenarios & Testing *(mandatory)*
 
-### User Story 1 - Retrieve Version via CLI (Priority: P1)
+### User Story 1 - Retrieve Version via CLI Subcommand (Priority: P1)
 
-As a developer or system administrator, I want to retrieve the application version using a CLI command so that I can quickly verify which version is installed on a local machine.
+As a developer or system administrator, I want to retrieve the application version using a dedicated CLI subcommand so that I can quickly verify which version is installed on a local machine.
 
 **Why this priority**: Essential for local development, troubleshooting, and deployment verification.
 
-**Independent Test**: Running the version command in the terminal should display the correct semantic version.
+**Independent Test**: Running the `version` command in the terminal should display the correct semantic version.
 
 **Acceptance Scenarios**:
 
-1. **Given** the application is installed, **When** I run `inky --version` or `inky version`, **Then** the current semantic version (raw numbers only) is printed to the standard output.
+1. **Given** the application is installed, **When** I run `inky version`, **Then** the current semantic version (raw numbers only) is printed to the standard output.
 2. **Given** the application is installed, **When** I run the version command, **Then** the output format is concise and easily readable.
 3. **Given** the command executes, **When** it completes successfully, **Then** it returns an exit code of 0.
 
@@ -57,7 +58,7 @@ As a remote user or monitoring system, I want to retrieve the application versio
 ### Functional Requirements
 
 - **FR-001**: System MUST provide a CLI subcommand `version` to display the application version.
-- **FR-002**: System MUST support a global flag `--version` to display the application version.
+- **FR-002**: System MUST NOT expose the version via a global flag (e.g., `--version`).
 - **FR-003**: System MUST provide an HTTP GET endpoint `/version` to retrieve the application version.
 - **FR-004**: The version string MUST follow semantic versioning (e.g., X.Y.Z) and MUST be raw numbers only (no 'v' prefix).
 - **FR-005**: The CLI output MUST be ONLY plain text.
