@@ -9,5 +9,6 @@
 			"pnpmVersion": "latest",
 			"nvmVersion": "latest"
 		}
-	}
+	},
+	"forwardPorts": [8080]
 }
