@@ -84,7 +84,7 @@ Examples of foundational tasks (adjust based on your project):
 
 - [ ] T011 [P] [US1] Unit test for core logic in `internal/core/[file]_test.go`
 - [ ] T012 [P] [US1] Integration test for API handler in `internal/api/[file]_test.go`
-- [ ] T013 [P] [US1] Create Bruno file for API testing in `bruno/[FEATURE]/[endpoint].bru`
+- [ ] T013 [P] [US1] Create Bruno file for API testing in `bruno/[endpoint].bru`
 - [ ] T014 [P] [US1] Functional test for CLI command in `internal/cli/[file]_test.go`
 
 ### Implementation for User Story 1
