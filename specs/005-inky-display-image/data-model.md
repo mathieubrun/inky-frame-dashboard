@@ -1,10 +1,10 @@
 # Data Model: Inky Frame Dashboard Display
 
-This document defines the configuration and state model for the MicroPython client.
+This document defines the configuration variables and state for the MicroPython client.
 
 ## Entities
 
-### Device Configuration (`.env.py`)
+### Device Configuration (`firmware/.env.py`)
 Variables stored on the device to control connectivity and behavior.
 
 | Variable | Type | Description |
@@ -12,20 +12,19 @@ Variables stored on the device to control connectivity and behavior.
 | `WIFI_SSID` | `string` | The SSID of the Wi-Fi network. |
 | `WIFI_PASSWORD` | `string` | The password for the Wi-Fi network. |
 | `DASHBOARD_URL` | `string` | The full URL to the Go API image endpoint. |
-| `SLEEP_MINUTES` | `int` | Duration of deep sleep between updates. |
-| `DISPLAY_TYPE` | `string` | Physical hardware variant (e.g., `spectra`). |
-| `BATTERY_THRESHOLD` | `float` | Voltage threshold for low battery indicator (e.g. 3.4). |
+| `SLEEP_MINUTES` | `int` | Duration of deep sleep between updates (Default: 30). |
+| `BATTERY_THRESHOLD` | `float` | Voltage threshold for low battery indicator (Default: 3.4). |
 
 ### Update State
-Transient state during an update cycle.
+Transient state during a wake cycle.
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `WokenBy` | `string` | Source of wake (RTC or Button). |
-| `LastResult` | `string` | Outcome of last update (Success/Error). |
-| `BatteryLevel` | `float` | Estimated battery voltage. |
+| `Voltage` | `float` | Current VSYS voltage read from ADC. |
+| `IsLowBattery` | `boolean` | True if `Voltage < BATTERY_THRESHOLD`. |
+| `UpdateSuccess` | `boolean` | Outcome of image fetch and render. |
 
 ## Storage
 
-- **Permanent**: `.env.py` (Flash memory).
-- **Temporary**: `dashboard.png` (Buffer or temporary file in Flash).
+- **Permanent**: `firmware/.env.py` (Flash memory on device).
+- **Transient**: RAM buffer for PNG decoding.

@@ -1,38 +1,38 @@
 # Quickstart: Inky Frame Dashboard Display
 
-This guide provides instructions for deploying the MicroPython client to your Inky Frame 7.3".
+This guide provides instructions for deploying the MicroPython client from the `firmware/` folder to your Inky Frame 7.3".
 
 ## Prerequisites
 
 - Raspberry Pi Pico W (integrated into Inky Frame 7.3").
 - [Pimoroni MicroPython Firmware](https://github.com/pimoroni/pimoroni-pico/releases) installed.
-- [Thonny IDE](https://thonny.org/) or similar tool for file transfer.
+- [Thonny IDE](https://thonny.org/) for file transfer.
 
 ## Installation Steps
 
 1. **Configure credentials**:
-   Create a file named `.env.py` on your computer with the following content:
+   In your local repository, navigate to `firmware/` and create/edit `.env.py`:
    ```python
    WIFI_SSID = "Your_SSID"
    WIFI_PASSWORD = "Your_Password"
    DASHBOARD_URL = "http://your-server-ip:8080/api/v1/weather/image?location=Zurich"
    SLEEP_MINUTES = 30
-   DISPLAY_TYPE = "spectra" # or "standard"
+   BATTERY_THRESHOLD = 3.4
    ```
 
 2. **Upload files**:
-   Transfer the following files to the root directory of the Pico W:
-   - `main.py` (The client script)
-   - `.env.py` (Your configuration)
+   Using Thonny, upload the following files from the `firmware/` folder to the root of the Pico W:
+   - `main.py`
+   - `.env.py`
 
 3. **Verify first run**:
-   Press the **RESET** button on the back of the Inky Frame or power it via the JST connector.
-   - The onboard LED should blink during the update.
-   - The e-ink display should refresh with the weather dashboard.
-   - The device will enter deep sleep after completion.
+   Press the **RESET** button on the Inky Frame.
+   - The device should wake up and connect to Wi-Fi.
+   - The e-ink display should refresh with the dashboard image.
+   - If the battery is low, a red indicator will appear in the top right.
+   - The device will enter deep sleep for the configured interval.
 
 ## Troubleshooting
 
-- **No image?**: Verify the `DASHBOARD_URL` is accessible from your Wi-Fi network.
-- **Immediate sleep?**: If powered via USB, the device might not truly power off, but it will wait for the interval. Test on battery for true deep sleep.
-- **Memory Error**: Ensure the Go API is returning a 800x480 PNG and not a larger file.
+- **Connection Refused**: Ensure the dashboard API is running and reachable from the device's network.
+- **Low Battery**: If the indicator persists despite fresh batteries, check the `BATTERY_THRESHOLD` in `.env.py`.

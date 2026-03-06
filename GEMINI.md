@@ -27,8 +27,8 @@ Go (Golang) 1.22+: Follow standard conventions
 
 ## Recent Changes
 - 005-inky-display-image: Added MicroPython (Pimoroni Firmware for RP2040) + inky_frame, picographics, pngdec, network, urequests, machine (ADC)
+- 005-inky-display-image: Added MicroPython (Pimoroni Firmware for RP2040) + inky_frame, picographics, pngdec, network, urequests, machine (ADC)
 - 004-weather-as-image: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper
-- 003-swiss-weather-forecast: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper
 
 
 <!-- MANUAL ADDITIONS START -->
