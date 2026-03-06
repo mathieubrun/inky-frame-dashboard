@@ -15,6 +15,11 @@ type Config struct {
 	WeatherImageCacheTTL time.Duration
 	WeatherMock          bool
 	FontPath             string
+	GoogleCredentials    string
+	AgendaID             string
+	AgendaMock           bool
+	AgendaCacheDir       string
+	AgendaCacheTTL       time.Duration
 }
 
 // Load loads the configuration from environment variables and flags.
@@ -26,6 +31,11 @@ func Load() (*Config, error) {
 	viper.SetDefault("weather_image_cache_ttl", 15*time.Minute)
 	viper.SetDefault("weather_mock", false)
 	viper.SetDefault("font_path", "")
+	viper.SetDefault("google_credentials", "")
+	viper.SetDefault("agenda_id", "primary")
+	viper.SetDefault("agenda_mock", false)
+	viper.SetDefault("agenda_cache_dir", "./.inky/cache/agenda")
+	viper.SetDefault("agenda_cache_ttl", 15*time.Minute)
 
 	viper.AutomaticEnv()
 
@@ -37,5 +47,10 @@ func Load() (*Config, error) {
 		WeatherImageCacheTTL: viper.GetDuration("weather_image_cache_ttl"),
 		WeatherMock:          viper.GetBool("weather_mock"),
 		FontPath:             viper.GetString("font_path"),
+		GoogleCredentials:    viper.GetString("google_credentials"),
+		AgendaID:             viper.GetString("agenda_id"),
+		AgendaMock:           viper.GetBool("agenda_mock"),
+		AgendaCacheDir:       viper.GetString("agenda_cache_dir"),
+		AgendaCacheTTL:       viper.GetDuration("agenda_cache_ttl"),
 	}, nil
 }

@@ -1,0 +1,23 @@
+meta {
+  name: Get Dashboard Image
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base_url}}/dashboard/image?location=Zurich&mock=true
+  body: none
+  auth: none
+}
+
+query {
+  location: Zurich
+  ~calendar_id: primary
+  ~palette: spectra6
+  mock: true
+}
+
+assert {
+  res.status: 200
+  res.headers["content-type"]: image/png
+}

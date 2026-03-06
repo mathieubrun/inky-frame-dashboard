@@ -7,6 +7,8 @@ import (
 	"testing"
 	"time"
 
+	"inky-frame-dashboard/internal/core"
+
 	"github.com/fogleman/gg"
 )
 
@@ -18,6 +20,7 @@ func TestWeatherImageRenderer_Render(t *testing.T) {
 		},
 		Current: WeatherRecord{
 			Temperature: 22.5,
+			Condition:   "Clear sky",
 			Timestamp:   time.Now(),
 		},
 		FetchedAt: time.Now(),
@@ -84,8 +87,8 @@ func TestWeatherImageRenderer_Palette(t *testing.T) {
 		t.Fatal("Expected paletted image when spectra6 is requested")
 	}
 
-	if len(paletted.Palette) != len(Spectra6Palette) {
-		t.Errorf("Expected palette size %d, got %d", len(Spectra6Palette), len(paletted.Palette))
+	if len(paletted.Palette) != len(core.Spectra6Palette) {
+		t.Errorf("Expected palette size %d, got %d", len(core.Spectra6Palette), len(paletted.Palette))
 	}
 }
 
@@ -95,9 +98,8 @@ func TestDrawWeatherIcon(t *testing.T) {
 	conditions := []string{"Sun", "Clear", "Cloudy", "Rain", "Unknown"}
 	for _, cond := range conditions {
 		t.Run(cond, func(t *testing.T) {
-			drawWeatherIcon(dc, 50, 50, 50, cond)
+			core.DrawWeatherIcon(dc, 50, 50, 50, cond)
 			// If it doesn't panic, it's at least not crashing.
-			// Detailed pixel check could be added if needed.
 		})
 	}
 }

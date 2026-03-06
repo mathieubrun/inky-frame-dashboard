@@ -1,0 +1,22 @@
+meta {
+  name: Get Agenda
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/agenda
+  body: none
+  auth: none
+}
+
+query {
+  ~calendar_id: primary
+  ~count: 5
+  ~mock: true
+}
+
+assert {
+  res.status: 200
+  res.headers["content-type"]: application/json
+}

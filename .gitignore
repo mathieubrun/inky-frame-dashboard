@@ -16,3 +16,7 @@ vendor/
 .inky
 
 firmware/env.py
+
+# Google Credentials
+*-credentials.json
+credentials.json
