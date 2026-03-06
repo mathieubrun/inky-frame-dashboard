@@ -5,16 +5,16 @@ meta {
 }
 
 get {
-  url: {{base_url}}/dashboard/image?location=Zurich&mock=true
+  url: {{base_url}}/dashboard/image?location=Nyon&mock=true
   body: none
   auth: none
 }
 
-query {
-  location: Zurich
+params:query {
+  location: Nyon
+  mock: true
   ~calendar_id: primary
   ~palette: spectra6
-  mock: true
 }
 
 assert {

@@ -5,14 +5,19 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/weather/swiss?city=Zurich&mock=true
+  url: {{base_url}}/weather/swiss?city=Zurich&mock=true
   body: none
   auth: none
+}
+
+params:query {
+  city: Zurich
+  mock: true
 }
 
 assert {
   res.status: eq 200
   res.body.location.city: eq Zurich
-  res.body.current.temperature: isNumber 
+  res.body.current.temperature: isNumber
   res.body.source: eq Mock Provider
 }
