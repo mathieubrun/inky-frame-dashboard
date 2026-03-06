@@ -7,7 +7,8 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}/cmd/inky/main.go",
-      "args": ["serve"]
+      "args": ["serve"],
+      "cwd": "${workspaceFolder}"
     },
     {
       "name": "CLI Version (version)",
