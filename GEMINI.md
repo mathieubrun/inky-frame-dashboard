@@ -7,6 +7,7 @@ Auto-generated from all feature plans. Last updated: 2026-03-05
 - Local JSON files for weather data caching. (003-swiss-weather-forecast)
 - MicroPython (Pimoroni Firmware for RP2040) + inky_frame, picographics, pngdec, network, urequests, machine (ADC) (005-inky-display-image)
 - Internal Flash (for script and config) (005-inky-display-image)
+- File-based JSON cache for calendar events. (006-google-agenda-display)
 
 - Go (Golang) 1.22+ + net/http, spf13/cobra, viper (003-get-app-version)
 
@@ -26,9 +27,9 @@ tests/
 Go (Golang) 1.22+: Follow standard conventions
 
 ## Recent Changes
+- 006-google-agenda-display: Added Go (Golang) 1.22+
 - 005-inky-display-image: Added MicroPython (Pimoroni Firmware for RP2040) + inky_frame, picographics, pngdec, network, urequests, machine (ADC)
 - 005-inky-display-image: Added MicroPython (Pimoroni Firmware for RP2040) + inky_frame, picographics, pngdec, network, urequests, machine (ADC)
-- 004-weather-as-image: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper
 
 
 <!-- MANUAL ADDITIONS START -->

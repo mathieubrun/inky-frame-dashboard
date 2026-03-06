@@ -1,19 +1,19 @@
 meta {
-  name: Get Weather Image
+  name: Get Dashboard Image
   type: http
-  seq: 3
+  seq: 5
 }
 
 get {
-  url: {{base_url}}/weather/image?location=Zurich
+  url: {{base_url}}/dashboard/image?location=Nyon&mock=true
   body: none
   auth: none
 }
 
 params:query {
-  location: Zurich
-  ~width: 800
-  ~height: 480
+  location: Nyon
+  mock: true
+  ~calendar_id: primary
   ~palette: spectra6
 }
 
