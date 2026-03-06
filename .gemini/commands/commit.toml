@@ -1,0 +1,13 @@
+description = "Commit all changed files with a message based on the last instruction."
+
+prompt = """
+Identify the intent of the last significant user instruction or use the provided arguments to create a commit message.
+
+1. **Staging**: Stage all modified and untracked files (respecting .gitignore) using `git add .`.
+2. **Commit Message**: 
+   - If `$ARGUMENTS` is not empty, use `$ARGUMENTS` as the instruction text.
+   - If `$ARGUMENTS` is empty, look back at the conversation history to find the last substantive instruction given by the user.
+3. **Action**: Execute `git commit -m "prompt: <INSTRUCTION>"` where `<INSTRUCTION>` is the text identified above.
+4. **Verification**: Run `git status` to confirm the commit was successful.
+5. **Output**: Briefly confirm the commit message used and the status.
+"""
