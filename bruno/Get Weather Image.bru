@@ -5,12 +5,12 @@ meta {
 }
 
 get {
-  url: {{base_url}}/weather/image?location=Zurich
+  url: {{baseUrl}}/weather/image?location=Zurich
   body: none
   auth: none
 }
 
-query {
+params:query {
   location: Zurich
   ~width: 800
   ~height: 480
