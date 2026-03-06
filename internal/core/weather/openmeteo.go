@@ -3,6 +3,7 @@ package weather
 import (
 	"encoding/json"
 	"fmt"
+	"inky-frame-dashboard/internal/core"
 	"net/http"
 	"net/url"
 	"time"
@@ -28,16 +29,22 @@ func NewOpenMeteoProvider() *OpenMeteoProvider {
 
 // GetForecast resolves the city to coordinates and fetches the weather forecast.
 func (p *OpenMeteoProvider) GetForecast(city string) (*WeatherForecast, error) {
+	core.InfoLogger.Printf("Fetching weather forecast for city: %s", city)
 	location, err := p.geocode(city)
 	if err != nil {
+		core.ErrorLogger.Printf("Geocoding failed for city %s: %v", city, err)
 		return nil, fmt.Errorf("geocoding error: %w", err)
 	}
 
+	core.InfoLogger.Printf("Geocoding successful for %s: Lat=%.4f, Lon=%.4f", city, location.Latitude, location.Longitude)
+
 	forecast, err := p.fetchWeather(location)
 	if err != nil {
+		core.ErrorLogger.Printf("Weather fetch failed for %s: %v", city, err)
 		return nil, fmt.Errorf("weather fetch error: %w", err)
 	}
 
+	core.InfoLogger.Printf("Successfully fetched weather for %s", city)
 	return forecast, nil
 }
 
@@ -52,6 +59,7 @@ type geocodingResponse struct {
 
 func (p *OpenMeteoProvider) geocode(city string) (*Location, error) {
 	apiURL := fmt.Sprintf("%s?name=%s&count=1&language=en&format=json", p.geocodingURL, url.QueryEscape(city))
+	core.InfoLogger.Printf("Calling geocoding API: %s", apiURL)
 	
 	resp, err := p.httpClient.Get(apiURL)
 	if err != nil {
@@ -132,6 +140,7 @@ func (p *OpenMeteoProvider) fetchWeather(location *Location) (*WeatherForecast, 
 		"%s?latitude=%.4f&longitude=%.4f&hourly=temperature_2m,weathercode,windspeed_10m,winddirection_10m,precipitation,precipitation_probability&forecast_days=1",
 		p.forecastURL, location.Latitude, location.Longitude,
 	)
+	core.InfoLogger.Printf("Calling weather forecast API: %s", apiURL)
 
 	resp, err := p.httpClient.Get(apiURL)
 	if err != nil {
