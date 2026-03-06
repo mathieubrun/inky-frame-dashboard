@@ -37,6 +37,17 @@ func Load() (*Config, error) {
 	viper.SetDefault("agenda_cache_dir", "./.inky/cache/agenda")
 	viper.SetDefault("agenda_cache_ttl", 15*time.Minute)
 
+	viper.SetConfigName(".env")
+	viper.SetConfigType("env")
+	viper.AddConfigPath(".")
+	viper.AddConfigPath("./.inky")
+	
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+			return nil, err
+		}
+	}
+
 	viper.AutomaticEnv()
 
 	return &Config{
