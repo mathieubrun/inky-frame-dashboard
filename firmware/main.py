@@ -5,7 +5,7 @@ import time
 import inky_frame
 import pngdec
 import urequests
-from picographics import PicoGraphics, DISPLAY_INKY_FRAME_7_SPECTRA as DISPLAY_TYPE
+from picographics import PicoGraphics, DISPLAY_INKY_FRAME_7 as DISPLAY_TYPE
 
 # Import local configuration
 try:
