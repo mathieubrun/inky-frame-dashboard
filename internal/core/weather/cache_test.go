@@ -1,6 +1,7 @@
 package weather
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -43,15 +44,18 @@ func TestCachedProvider(t *testing.T) {
 		t.Errorf("expected cached data, but got new data (FetchedAt: %v != %v)", f1.FetchedAt, f2.FetchedAt)
 	}
 
-	// 3. Third fetch with expired TTL
-	cache.ttl = -1 * time.Second // Force expiry
+	// 3. Third fetch with mocked "stale" time (after 04:00 AM)
+	// If f1 was fetched at T, and we are now at T+24h, it should be stale
+	cache.now = func() time.Time {
+		return f1.FetchedAt.Add(24 * time.Hour)
+	}
 	f3, err := cache.GetForecast(city)
 	if err != nil {
 		t.Fatalf("third fetch failed: %v", err)
 	}
 
 	if f3.FetchedAt.Equal(f1.FetchedAt) {
-		t.Errorf("expected new data after expiry, but got cached data")
+		t.Errorf("expected new data after 24h, but got cached data")
 	}
 }
 
@@ -113,4 +117,52 @@ func TestWeatherImageCache(t *testing.T) {
 	if err == nil {
 		t.Error("expected error for missing cache entry, got nil")
 	}
+}
+
+func TestIsWeatherFresh(t *testing.T) {
+	// Case 1: Currently 10:00 AM, data from 05:00 AM (Today) -> Fresh
+	now1 := time.Date(2026, 3, 7, 10, 0, 0, 0, time.UTC)
+	fetched1 := time.Date(2026, 3, 7, 5, 0, 0, 0, time.UTC)
+	if !IsWeatherFresh(fetched1, now1) {
+		t.Errorf("Expected data from %v to be fresh at %v", fetched1, now1)
+	}
+
+	// Case 2: Currently 10:00 AM, data from 03:00 AM (Today) -> Stale
+	fetched2 := time.Date(2026, 3, 7, 3, 0, 0, 0, time.UTC)
+	if IsWeatherFresh(fetched2, now1) {
+		t.Errorf("Expected data from %v to be stale at %v", fetched2, now1)
+	}
+
+	// Case 3: Currently 02:00 AM, data from 23:00 (Yesterday) -> Fresh
+	now2 := time.Date(2026, 3, 7, 2, 0, 0, 0, time.UTC)
+	fetched3 := time.Date(2026, 3, 6, 23, 0, 0, 0, time.UTC)
+	if !IsWeatherFresh(fetched3, now2) {
+		t.Errorf("Expected data from %v to be fresh at %v", fetched3, now2)
+	}
+
+	// Case 4: Currently 02:00 AM, data from 03:00 (Yesterday) -> Stale
+	fetched4 := time.Date(2026, 3, 6, 3, 0, 0, 0, time.UTC)
+	if IsWeatherFresh(fetched4, now2) {
+		t.Errorf("Expected data from %v to be stale at %v", fetched4, now2)
+	}
+}
+
+func TestCachedProvider_Error(t *testing.T) {
+	tempDir, _ := os.MkdirTemp("", "weather_cache_err_test")
+	defer os.RemoveAll(tempDir)
+
+	// Provider that always fails
+	mock := &errorProvider{}
+	cache := NewCachedProvider(mock, tempDir, 1*time.Hour)
+
+	_, err := cache.GetForecast("London")
+	if err == nil {
+		t.Error("Expected error from GetForecast when provider fails, got nil")
+	}
+}
+
+type errorProvider struct{}
+
+func (p *errorProvider) GetForecast(city string) (*WeatherForecast, error) {
+	return nil, fmt.Errorf("provider error")
 }

@@ -16,6 +16,7 @@ type CachedProvider struct {
 	provider Provider
 	cacheDir string
 	ttl      time.Duration
+	now      func() time.Time // For testing
 }
 
 // NewCachedProvider creates a new CachedProvider.
@@ -24,7 +25,18 @@ func NewCachedProvider(provider Provider, cacheDir string, ttl time.Duration) *C
 		provider: provider,
 		cacheDir: cacheDir,
 		ttl:      ttl,
+		now:      time.Now,
 	}
+}
+
+// IsWeatherFresh checks if the weather data is fresh based on the 04:00 AM daily refresh rule.
+func IsWeatherFresh(fetchedAt time.Time, now time.Time) bool {
+	// Calculate the most recent 04:00 AM
+	last4AM := time.Date(now.Year(), now.Month(), now.Day(), 4, 0, 0, 0, now.Location())
+	if now.Before(last4AM) {
+		last4AM = last4AM.AddDate(0, 0, -1)
+	}
+	return fetchedAt.After(last4AM)
 }
 
 // GetForecast returns weather data, using the cache if it's available and fresh.
@@ -34,12 +46,12 @@ func (p *CachedProvider) GetForecast(city string) (*WeatherForecast, error) {
 	// Try to load from cache
 	forecast, err := p.loadFromCache(filename)
 	if err == nil {
-		// Check if the cache is fresh
-		if time.Since(forecast.FetchedAt) < p.ttl {
+		// Check if the cache is fresh based on the 04:00 AM rule
+		if IsWeatherFresh(forecast.FetchedAt, p.now()) {
 			core.InfoLogger.Printf("Cache hit for city: %s", city)
 			return forecast, nil
 		}
-		core.InfoLogger.Printf("Cache entry for city: %s is stale", city)
+		core.InfoLogger.Printf("Cache entry for city: %s is stale (must refresh after 04:00 AM)", city)
 	} else {
 		core.InfoLogger.Printf("Cache miss for city: %s", city)
 	}

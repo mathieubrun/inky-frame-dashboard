@@ -14,6 +14,8 @@ A centralized dashboard for managing the Inky Frame (Raspberry Pi Pico W) and ot
 - Retrieve application version via CLI and API.
 - Battery level monitoring for Inky Frame devices.
 - Persistent battery history in CSV format.
+- Battery optimization: Conditional screen refreshes using ETag/304.
+- Server-side weather data caching with daily 04:00 AM refresh.
 
 ## CLI Usage
 ```bash

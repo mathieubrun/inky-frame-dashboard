@@ -1,0 +1,19 @@
+meta {
+  name: Get Dashboard Image 304
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{base_url}}/dashboard/image?location=Zurich
+  body: none
+  auth: none
+}
+
+headers {
+  If-None-Match: {{last_etag}}
+}
+
+assert {
+  res.status: eq 304
+}
