@@ -22,8 +22,8 @@
 
 **Purpose**: Project initialization and base utilities
 
-- [ ] T001 [P] Implement MD5 hashing utility for image data in `internal/core/render.go`
-- [ ] T002 [P] Unit test for MD5 utility in `internal/core/render_test.go`
+- [X] T001 [P] Implement MD5 hashing utility for image data in `internal/core/render.go`
+- [X] T002 [P] Unit test for MD5 utility in `internal/core/render_test.go`
 
 ---
 
@@ -33,9 +33,9 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Implement "Last 04:00 AM" freshness logic in `internal/core/weather/cache.go`
-- [ ] T004 [P] Unit tests for "Last 04:00 AM" logic in `internal/core/weather/cache_test.go`
-- [ ] T005 Update `internal/core/weather/cache.go` to use the new freshness check instead of fixed TTL
+- [X] T003 Implement "Last 04:00 AM" freshness logic in `internal/core/weather/cache.go`
+- [X] T004 [P] Unit tests for "Last 04:00 AM" logic in `internal/core/weather/cache_test.go`
+- [X] T005 Update `internal/core/weather/cache.go` to use the new freshness check instead of fixed TTL
 
 **Checkpoint**: Foundation ready - weather data now follows the daily refresh schedule.
 
@@ -49,17 +49,17 @@
 
 ### Tests for User Story 1 (REQUIRED) ⚠️
 
-- [ ] T006 [P] [US1] Unit test for ETag generation and 304 handling in `internal/api/dashboard_test.go`
-- [ ] T007 [P] [US1] Create Bruno file `bruno/Get Dashboard Image with ETag.bru` with ETag assertion
-- [ ] T008 [P] [US1] Verify coverage >80% for ETag logic (`go test ./internal/api/... -cover`)
+- [X] T006 [P] [US1] Unit test for ETag generation and 304 handling in `internal/api/dashboard_test.go`
+- [X] T007 [P] [US1] Create Bruno file `bruno/Get Dashboard Image with ETag.bru` with ETag assertion
+- [X] T008 [P] [US1] Verify coverage >80% for ETag logic (`go test ./internal/api/... -cover`)
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] Integrate MD5 hashing into `DashboardImageHandler` in `internal/api/dashboard.go`
-- [ ] T010 [US1] Implement `If-None-Match` check and `StatusNotModified` response in `internal/api/dashboard.go`
-- [ ] T011 [US1] Update `firmware/main.py` to read/write ETag from `/etag.txt`
-- [ ] T012 [US1] Update `firmware/main.py` `fetch_image` function to send `If-None-Match` header
-- [ ] T013 [US1] Update `firmware/main.py` `main` loop to skip `render_image` and `display.update` on 304
+- [X] T009 [US1] Integrate MD5 hashing into `DashboardImageHandler` in `internal/api/dashboard.go`
+- [X] T010 [US1] Implement `If-None-Match` check and `StatusNotModified` response in `internal/api/dashboard.go`
+- [X] T011 [US1] Update `firmware/main.py` to read/write ETag from `/etag.txt`
+- [X] T012 [US1] Update `firmware/main.py` `fetch_image` function to send `If-None-Match` header
+- [X] T013 [US1] Update `firmware/main.py` `main` loop to skip `render_image` and `display.update` on 304
 
 **Checkpoint**: User Story 1 is functional. Devices skip refreshes for identical content.
 
@@ -73,13 +73,10 @@
 
 ### Tests for User Story 2 (REQUIRED) ⚠️
 
-- [ ] T014 [P] [US2] Unit test for weather fetch timing in `internal/core/weather/cache_test.go` (mocking time)
-- [ ] T015 [P] [US2] Verify coverage >80% for daily refresh logic
-
-### Implementation for User Story 2
-
-- [ ] T016 [US2] Refactor `DashboardImageHandler` in `internal/api/dashboard.go` to ensure weather provider uses the daily refresh logic
-- [ ] T017 [US2] Add logging for weather cache invalidation at 04:00 AM
+- [X] T014 [P] [US2] Unit test for weather fetch timing in `internal/core/weather/cache_test.go` (mocking time)
+- [X] T015 [P] [US2] Verify coverage >80% for daily refresh logic
+- [X] T016 [US2] Refactor `DashboardImageHandler` in `internal/api/dashboard.go` to ensure weather provider uses the daily refresh logic
+- [X] T017 [US2] Add logging for weather cache invalidation at 04:00 AM
 
 **Checkpoint**: User Story 2 is functional. Weather refreshes follow the 04:00 AM schedule.
 
@@ -93,13 +90,10 @@
 
 ### Tests for User Story 3 (REQUIRED) ⚠️
 
-- [ ] T018 [P] [US3] Unit test for agenda-driven image change in `internal/api/dashboard_test.go`
-- [ ] T019 [P] [US3] Verify coverage >80% for live calendar check logic
-
-### Implementation for User Story 3
-
-- [ ] T020 [US3] Update `DashboardImageHandler` in `internal/api/dashboard.go` to perform synchronous calendar fetch
-- [ ] T021 [US3] Ensure ETag is calculated AFTER calendar data is merged into the image
+- [X] T018 [P] [US3] Unit test for agenda-driven image change in `internal/api/dashboard_test.go`
+- [X] T019 [P] [US3] Verify coverage >80% for live calendar check logic
+- [X] T020 [US3] Update `DashboardImageHandler` in `internal/api/dashboard.go` to perform synchronous calendar fetch
+- [X] T021 [US3] Ensure ETag is calculated AFTER calendar data is merged into the image
 
 **Checkpoint**: User Story 3 is functional. Calendar changes trigger screen updates on next poll.
 
@@ -109,10 +103,10 @@
 
 **Purpose**: Final verification and documentation
 
-- [ ] T022 Update `firmware/env.template.py` with default `SLEEP_MINUTES = 60` per spec FR-006
-- [ ] T023 [P] Update `README.md` with ETag/304 optimization details
-- [ ] T024 [P] Final verification of project-wide test coverage (>80%)
-- [ ] T025 Run `quickstart.md` validation steps
+- [X] T022 Update `firmware/env.template.py` with default `SLEEP_MINUTES = 60` per spec FR-006
+- [X] T023 [P] Update `README.md` with ETag/304 optimization details
+- [X] T024 [P] Final verification of project-wide test coverage (>80%)
+- [X] T025 Run `quickstart.md` validation steps
 
 ---
 

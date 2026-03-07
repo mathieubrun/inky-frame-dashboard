@@ -22,10 +22,27 @@ PIN_VSYS_READ_EN = 25
 # Constants
 VOLTAGE_CONVERSION_FACTOR = 3 * 3.3 / 65535
 TEMP_IMAGE_FILE = "dashboard.png"
+ETAG_FILE = "etag.txt"
 
 # Initialize Display
 display = PicoGraphics(display=DISPLAY_TYPE)
 display.set_font("bitmap8")
+
+def get_stored_etag():
+    """Reads the stored ETag from internal flash."""
+    try:
+        with open(ETAG_FILE, "r") as f:
+            return f.read().strip()
+    except:
+        return None
+
+def save_etag(etag):
+    """Saves the ETag to internal flash."""
+    try:
+        with open(ETAG_FILE, "w") as f:
+            f.write(etag)
+    except Exception as e:
+        print(f"Failed to save etag: {e}")
 
 def get_battery_voltage():
     """Reads the VSYS voltage via ADC to estimate battery level."""
@@ -108,13 +125,28 @@ def sleep():
     inky_frame.sleep_for(sleep_mins)
 
 def fetch_image(url, filename):
-    """Fetches the image from the specified URL and saves it to a file."""
+    """Fetches the image from the specified URL and saves it to a file. Supports ETag/304."""
     print(f"Fetching image from {url}")
+    etag = get_stored_etag()
+    headers = {}
+    if etag:
+        headers["If-None-Match"] = etag
+        
     try:
         # Important: Setting timeout is crucial for battery devices
-        response = urequests.get(url, timeout=30)
+        response = urequests.get(url, headers=headers, timeout=30)
         
+        if response.status_code == 304:
+            print("Status: 304, image not modified.")
+            response.close()
+            return "NOT_MODIFIED"
+            
         if response.status_code == 200:
+            # Update etag from header if present
+            new_etag = response.headers.get("ETag")
+            if new_etag:
+                save_etag(new_etag)
+                
             with open(filename, 'wb') as f:
                 f.write(response.content)
             response.close()
@@ -204,20 +236,24 @@ def main():
 
         # 4. Fetch Image
         gc.collect() # Free up memory before fetch
-        if not fetch_image(env.DASHBOARD_URL, TEMP_IMAGE_FILE):
+        fetch_status = fetch_image(env.DASHBOARD_URL, TEMP_IMAGE_FILE)
+        
+        if fetch_status == "NOT_MODIFIED":
+            print("Image unchanged. Skipping screen refresh to save battery.")
+        elif fetch_status == True:
+            # 5. Render Image
+            gc.collect() # Free up memory before rendering
+            if render_image(TEMP_IMAGE_FILE, voltage):
+                print("Updating e-ink display (this will take ~40 seconds)...")
+                display.update()
+                print("Update complete.")
+            else:
+                draw_error_screen("Failed to decode and render the downloaded image.")
+        else:
             print("Failed to fetch image. Sleeping.")
             draw_error_screen(f"Failed to download dashboard from:\n{env.DASHBOARD_URL}")
             sleep()
             return
-            
-        # 4. Render Image
-        gc.collect() # Free up memory before rendering
-        if render_image(TEMP_IMAGE_FILE, voltage):
-            print("Updating e-ink display (this will take ~40 seconds)...")
-            display.update()
-            print("Update complete.")
-        else:
-            draw_error_screen("Failed to decode and render the downloaded image.")
         
         gc.collect() # Final cleanup
         

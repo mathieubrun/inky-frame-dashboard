@@ -1,6 +1,8 @@
 package core
 
 import (
+	"crypto/md5"
+	"fmt"
 	"image"
 	"image/color"
 	"image/draw"
@@ -8,6 +10,11 @@ import (
 
 	"github.com/fogleman/gg"
 )
+
+// CalculateMD5 returns the MD5 hash of the provided data as a hex string.
+func CalculateMD5(data []byte) string {
+	return fmt.Sprintf("%x", md5.Sum(data))
+}
 
 // Inky Palette colors
 var (

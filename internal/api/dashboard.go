@@ -74,6 +74,16 @@ func (s *Server) DashboardImageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// --- 4. ETag / 304 Logic ---
+	etag := "\"" + core.CalculateMD5(data) + "\""
+	w.Header().Set("ETag", etag)
+
+	if r.Header.Get("If-None-Match") == etag {
+		core.InfoLogger.Printf("Dashboard: Image not modified (ETag: %s)", etag)
+		w.WriteHeader(http.StatusNotModified)
+		return
+	}
+
 	w.Header().Set("Content-Type", "image/png")
 	_, _ = w.Write(data)
 }
