@@ -9,6 +9,8 @@ Auto-generated from all feature plans. Last updated: 2026-03-05
 - Internal Flash (for script and config) (005-inky-display-image)
 - File-based JSON cache for calendar events. (006-google-agenda-display)
 - Local CSV file (e.g., `data/battery.csv`) (007-battery-level-monitoring)
+- Go (Golang) 1.22+ + net/http, spf13/cobra, viper, crypto/md5 (008-battery-refresh-optimization)
+- File-based weather cache (existing); persistent ETag file on MicroPython device. (008-battery-refresh-optimization)
 
 - Go (Golang) 1.22+ + net/http, spf13/cobra, viper (003-get-app-version)
 
@@ -28,9 +30,9 @@ tests/
 Go (Golang) 1.22+: Follow standard conventions
 
 ## Recent Changes
+- 008-battery-refresh-optimization: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper, crypto/md5
 - 008-battery-refresh-optimization: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper
 - 007-battery-level-monitoring: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper
-- 006-google-agenda-display: Added Go (Golang) 1.22+
 
 
 <!-- MANUAL ADDITIONS START -->

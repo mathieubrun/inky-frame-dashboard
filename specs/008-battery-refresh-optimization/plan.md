@@ -3,26 +3,24 @@
 **Branch**: `008-battery-refresh-optimization` | **Date**: 2026-03-07 | **Spec**: [specs/008-battery-refresh-optimization/spec.md](spec.md)
 **Input**: Feature specification from `/specs/008-battery-refresh-optimization/spec.md`
 
-**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/plan-template.md` for the execution workflow.
-
 ## Summary
 
-Optimize Inky Frame battery life by implementing conditional screen refreshes based on image content changes. The system will use standard HTTP ETag/304 Not Modified mechanisms. The device will send its current image's ETag in the `If-None-Match` header. If the server-side image (which only changes when weather data refreshes at 04:00 or calendar updates occur) matches, a 304 response is returned, and the device skips the power-intensive refresh.
+Optimize Inky Frame battery life by implementing conditional screen refreshes based on image content changes. The system will use standard HTTP ETag/304 Not Modified mechanisms. The device will send its current image's ETag in the `If-None-Match` header. The server will generate an MD5 hash of the rendered image. Weather data will be cached and only refreshed at 04:00 AM server-side. Calendar data will be checked synchronously from Google Calendar on each device request. If the resulting image hash matches the `If-None-Match` value, a 304 response is returned, and the device skips the refresh.
 
 ## Technical Context
 
 **Language/Version**: Go (Golang) 1.22+
-**Primary Dependencies**: net/http, spf13/cobra, viper
-**Storage**: Memory cache for current dashboard hash; persistent file cache (optional/NEEDS CLARIFICATION).
+**Primary Dependencies**: net/http, spf13/cobra, viper, crypto/md5
+**Storage**: File-based weather cache (existing); persistent ETag file on MicroPython device.
 **Testing**: standard library testing (Required, >80% coverage)
 **Target Platform**: Raspberry Pi Pico W (Inky Frame) + Linux Server (API)
 **Project Type**: Web Service + Embedded MicroPython
-**Performance Goals**: Image hash calculation < 50ms; API check-for-change response < 100ms.
+**Performance Goals**: Image hash calculation < 50ms; API check-for-change response < 500ms.
 **Constraints**: 
 - Must use standard library `net/http` ETag headers.
-- Device logic must be minimal (only 304 handling).
-- Weather refresh exactly at 04:00 (NEEDS CLARIFICATION: cron vs internal scheduler).
-**Scale/Scope**: Single device, but extensible to multiple via device-specific ETag tracking.
+- Device logic must be minimal (only 304 handling and etag persistence).
+- Weather refresh logic must be moved to server-side at 04:00 AM.
+**Scale/Scope**: Single device support (extensible).
 
 ## Constitution Check
 
@@ -55,10 +53,10 @@ specs/008-battery-refresh-optimization/
 ```text
 internal/
 ├── api/      # dashboard.go (ETag/304 logic in DashboardImageHandler)
-├── core/     # dashboard/ (Logic for weather scheduling and calendar change detection)
+├── core/     # weather/cache.go (04:00 AM freshness logic)
 ```
 
-**Structure Decision**: ETag generation will be integrated into `internal/api/dashboard.go`. Weather scheduling logic will be added to `internal/core`.
+**Structure Decision**: ETag generation will be integrated into `internal/api/dashboard.go`. Weather freshness logic will be updated in `internal/core/weather/cache.go`.
 
 ## Complexity Tracking
 

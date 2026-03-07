@@ -22,10 +22,9 @@
   - This ensures that after 04:00, the first request will trigger a refresh.
 
 ### Calendar Refresh
-- The specification says "Calendar data is refreshed when calendar is updated."
-- Currently, `agenda.CachedProvider` uses a fixed TTL (default 15 minutes).
-- To support "when updated", we would ideally need webhooks, but since the Inky Frame polls every 60 minutes anyway, the current TTL approach is acceptable as long as it's shorter than the wake interval.
-- **Optimization**: The server-side dashboard rendering will produce the same image (and thus same ETag) if the calendar data hasn't changed, fulfilling the requirement to limit refreshes.
+- The specification clarifies: "When the inky frame makes a request, the server checks google calendar."
+- Implementation: The `DashboardImageHandler` will continue to fetch the agenda synchronously. The ETag logic will then detect if the resulting image is different from the device's last version.
+- **Optimization**: Since the Inky Frame polls every 60 minutes, this ensures changes are caught within an hour without requiring complex webhook infrastructure.
 
 ## Decisions
 
