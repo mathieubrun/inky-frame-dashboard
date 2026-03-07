@@ -1,11 +1,13 @@
 import gc
+import time
+
+import inky_frame
 import machine
 import network
-import time
-import inky_frame
 import pngdec
 import urequests
-from picographics import PicoGraphics, DISPLAY_INKY_FRAME_7 as DISPLAY_TYPE
+from picographics import DISPLAY_INKY_FRAME_7 as DISPLAY_TYPE
+from picographics import PicoGraphics
 
 # Import local configuration
 try:
@@ -31,7 +33,7 @@ display.set_font("bitmap8")
 def get_stored_etag():
     """Reads the stored ETag from internal flash."""
     try:
-        with open(ETAG_FILE, "r") as f:
+        with open(ETAG_FILE) as f:
             return f.read().strip()
     except:
         return None
@@ -43,6 +45,15 @@ def save_etag(etag):
             f.write(etag)
     except Exception as e:
         print(f"Failed to save etag: {e}")
+
+def delete_etag():
+    """Deletes the stored ETag to force a refresh on next wake."""
+    try:
+        import os
+        os.remove(ETAG_FILE)
+        print("ETag cleared due to error.")
+    except:
+        pass
 
 def get_battery_voltage():
     """Reads the VSYS voltage via ADC to estimate battery level."""
@@ -72,32 +83,32 @@ def set_led(color, state):
     # Inky Frame has a single activity LED
     inky_frame.button_a.led_on() if state else inky_frame.button_a.led_off()
 
-def connect_wifi(ssid, password, timeout=15):
-    """Connects to the specified Wi-Fi network with a timeout."""
+def connect_wifi(ssid, password, tries=3):
+        # Enable the Wireless
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
-    
-    if wlan.isconnected():
-        return True
 
-    print(f"Connecting to WiFi: {ssid}")
+    # Number of attempts to make before timeout
+    max_wait = 15
+
+    # Sets the Wireless LED pulsing and attempts to connect to your local network.
+    wlan.config(pm=0xa11140)  # Turn WiFi power saving off for some slow APs
     wlan.connect(ssid, password)
 
-    start_time = time.time()
-    # Blink LED while connecting
-    led_state = False
-    while not wlan.isconnected():
-        if time.time() - start_time > timeout:
-            print("WiFi Connection Timeout")
-            wlan.active(False)
-            set_led("network", False)
-            return False
-        set_led("network", led_state)
-        led_state = not led_state
-        time.sleep(0.5)
+    while max_wait > 0:
+        if wlan.status() < 0 or wlan.status() >= 3:
+            break
+        max_wait -= 1
+        print('waiting for connection...')
+        time.sleep(1)
 
-    set_led("network", True) # Solid on connected
-    print(f"Connected. IP: {wlan.ifconfig()[0]}")
+
+    # Handle connection error. Switches the Warn LED on.
+    if wlan.status() != 3:
+        if tries:
+            return connect_wifi(ssid, password, tries-1)
+        return False
+
     return True
 
 def report_battery(url, voltage):
@@ -143,7 +154,7 @@ def fetch_image(url, filename):
             
         if response.status_code == 200:
             # Update etag from header if present
-            new_etag = response.headers.get("ETag")
+            new_etag = response.headers.get("Etag") # headers here are case sentitive. golang sends ETag as Etag
             if new_etag:
                 save_etag(new_etag)
                 
@@ -194,6 +205,9 @@ def render_image(filename, voltage):
 
 def draw_error_screen(message):
     """Draws an error message to the display."""
+    # Clear ETag so we force a refresh next time we wake up
+    delete_etag()
+    
     display.set_pen(1) # White
     display.clear()
     

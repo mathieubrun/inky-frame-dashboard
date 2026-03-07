@@ -2,36 +2,27 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "API Server (serve)",
-      "type": "go",
+      "name": "Python: cli",
+      "type": "debugpy",
       "request": "launch",
-      "mode": "auto",
-      "program": "${workspaceFolder}/cmd/inky/main.go",
-      "args": ["serve"],
-      "cwd": "${workspaceFolder}"
+      "module": "typer",
+      "args": [
+        "src/cli/main.py",
+        "run",
+        "version",
+      ],
     },
     {
-      "name": "CLI Version (version)",
-      "type": "go",
+      "name": "Python: api",
+      "type": "debugpy",
       "request": "launch",
-      "mode": "auto",
-      "program": "${workspaceFolder}/cmd/inky/main.go",
-      "args": ["version"]
+      "module": "uvicorn",
+      "args": [
+        "src.api.main:app",
+        "--reload",
+        "--log-config",
+        "src/api/logger_config.yaml",
+      ],
     },
-    {
-      "name": "CLI (Custom Args)",
-      "type": "go",
-      "request": "launch",
-      "mode": "auto",
-      "program": "${workspaceFolder}/cmd/inky/main.go",
-      "args": ["${command:AskForArgs}"]
-    },
-    {
-      "name": "Run Tests",
-      "type": "go",
-      "request": "launch",
-      "mode": "test",
-      "program": "${fileDirname}"
-    }
   ]
 }

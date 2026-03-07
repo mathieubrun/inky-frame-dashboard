@@ -1,0 +1,11 @@
+meta {
+  name: get_weather
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/dashboard/weather?width=600&height=448
+  body: none
+  auth: none
+}

@@ -1,0 +1,11 @@
+meta {
+  name: get_history
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/battery/history?limit=10&offset=0
+  body: none
+  auth: none
+}

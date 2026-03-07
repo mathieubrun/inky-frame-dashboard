@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "inky-frame-dashboard"
+version = "3.0.0"
+description = "Inky Frame Dashboard - Python rewrite"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiofiles~=25.1",
+    "cachetools~=7.1",
+    "dishka~=1.10",
+    "fastapi[standard]~=0.135",
+    "google-api-python-client>=2.197.0",
+    "google-auth~=2.53",
+    "httpx~=0.28",
+    "pillow~=12.1",
+    "pydantic-settings~=2.13",
+    "pytest~=9.0",
+    "pytest-cov~=7.0",
+    "requests~=2.34",
+    "uvicorn~=0.42",
+]
+
+[project.scripts]
+inky = "src.cli.main:cli"
+
+[dependency-groups]
+dev = [
+    "fastapi-cli~=0.0",
+    "ruff~=0.15",
+    "pytest~=9.0",
+    "pytest-cov~=7.0",
+    "pytest-mock~=3.15",
+    "pytest-asyncio~=1.4",
+]
+
+[tool.ruff]
+line-length = 240
+target-version = "py311"
+exclude = ["firmware"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "C4", "SIM", "PTH"]
+ignore = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+addopts = "--cov=src --cov-report=term-missing"
+
+[tool.uv]
+package = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends"]

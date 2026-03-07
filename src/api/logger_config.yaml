@@ -1,0 +1,29 @@
+version: 1
+formatters:
+  simple:
+    format: '%(request_id)s - %(asctime)s - %(levelname)8s - %(name)s - %(message)s'
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: simple
+    stream: ext://sys.stdout
+    filters: [requestIdFilter]
+filters:
+  requestIdFilter:
+    (): src.api.logger_config.RequestIdFilter
+loggers:
+  root:
+    level: INFO
+    handlers: 
+      - console
+  uvicorn.error:
+    level: INFO
+    handlers:
+      - console
+    propagate: no
+  uvicorn.access:
+    level: INFO
+    handlers:
+      - console
+    propagate: no

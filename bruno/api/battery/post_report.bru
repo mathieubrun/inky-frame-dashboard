@@ -1,0 +1,17 @@
+meta {
+  name: post_report
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/battery
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "voltage": 4.5
+  }
+}

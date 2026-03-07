@@ -1,21 +1,16 @@
 {
-	"name": "golang",
-	"image": "mcr.microsoft.com/devcontainers/go:1-1.24-bookworm",
-	"features": {
-		"ghcr.io/devcontainers/features/node:1": {
-			"version": "lts",
-			"pnpmVersion": "latest",
-			"nvmVersion": "latest"
-		}
+	"name": "python",
+	"build": {
+		"dockerfile": "Dockerfile"
 	},
 	"forwardPorts": [8080],
-	"postCreateCommand": "npm install -g @google/gemini-cli",
+	"postCreateCommand": "curl -fsSL https://antigravity.google/cli/install.sh | bash",
 	"customizations": {
 		"vscode": {
 			"extensions": [
+				"charliermarsh.ruff",
 				"mhutchie.git-graph",
-				"golang.go",
-				"google.gemini-cli-vscode-ide-companion"
+				"ms-python.python"
 			]
 		}
 	}

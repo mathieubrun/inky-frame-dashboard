@@ -8,6 +8,31 @@
 *.out
 __debug_bin*
 
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
 bruno/environments/*.private.bru
 
 # Go build/vendor
@@ -23,3 +48,6 @@ coverage.html
 # Google Credentials
 *-credentials.json
 credentials.json
+
+.antigravitycli
+.env
