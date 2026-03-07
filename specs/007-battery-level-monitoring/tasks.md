@@ -48,7 +48,7 @@
 
 **Goal**: Enable Inky Frame to report battery voltage to the server for persistence.
 
-**Independent Test**: Send a POST request to `/api/v1/battery` and verify the value appears in the CSV file.
+**Independent Test**: Send a POST request to `/battery` and verify the value appears in the CSV file.
 
 ### Tests for User Story 1 (REQUIRED) ⚠️
 
@@ -61,7 +61,7 @@
 
 - [X] T013 [P] [US1] Implement report validation and processing in `internal/core/battery/battery.go`
 - [X] T014 [US1] Implement `BatteryReportHandler` (POST) in `internal/api/battery.go`
-- [X] T015 [US1] Register POST `/api/v1/battery` route in `internal/api/server.go`
+- [X] T015 [US1] Register POST `/battery` route in `internal/api/server.go`
 - [X] T016 [US1] Add logging for received battery reports in `internal/api/battery.go`
 
 **Checkpoint**: User Story 1 is functional. Devices can report battery levels.
@@ -72,7 +72,7 @@
 
 **Goal**: Allow users/apps to query the latest reported battery level.
 
-**Independent Test**: Query `/api/v1/battery/status` and receive the most recent report as JSON.
+**Independent Test**: Query `/battery/status` and receive the most recent report as JSON.
 
 ### Tests for User Story 2 (REQUIRED) ⚠️
 
@@ -85,7 +85,7 @@
 
 - [X] T021 [P] [US2] Implement `GetLatestReport` logic in `internal/core/battery/storage.go`
 - [X] T022 [US2] Implement `BatteryStatusHandler` (GET) in `internal/api/battery.go` returning JSON
-- [X] T023 [US2] Register GET `/api/v1/battery/status` route in `internal/api/server.go`
+- [X] T023 [US2] Register GET `/battery/status` route in `internal/api/server.go`
 
 **Checkpoint**: User Story 2 is functional. Latest battery status is accessible via API.
 
@@ -95,7 +95,7 @@
 
 **Goal**: Retrieve the full history of battery reports for analysis.
 
-**Independent Test**: Query `/api/v1/battery/history` and receive raw CSV text. Run `inky battery history` from CLI.
+**Independent Test**: Query `/battery/history` and receive raw CSV text. Run `inky battery history` from CLI.
 
 ### Tests for User Story 3 (REQUIRED) ⚠️
 
@@ -109,7 +109,7 @@
 
 - [X] T029 [P] [US3] Implement `GetHistoryRaw` logic in `internal/core/battery/storage.go`
 - [X] T030 [US3] Implement `BatteryHistoryHandler` (GET) in `internal/api/battery.go` returning raw text
-- [X] T031 [US3] Register GET `/api/v1/battery/history` route in `internal/api/server.go`
+- [X] T031 [US3] Register GET `/battery/history` route in `internal/api/server.go`
 - [X] T032 [US3] Implement `battery` command and `history` subcommand in `internal/cli/battery.go`
 - [X] T033 [US3] Implement `clear` subcommand in `internal/cli/battery.go` to reset CSV
 

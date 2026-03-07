@@ -42,9 +42,9 @@ func (s *Server) Start() error {
 	mux.HandleFunc("/dashboard/image", s.DashboardImageHandler)
 
 	// Battery routes
-	mux.HandleFunc("/api/v1/battery", s.BatteryReportHandler)
-	mux.HandleFunc("/api/v1/battery/status", s.BatteryStatusHandler)
-	mux.HandleFunc("/api/v1/battery/history", s.BatteryHistoryHandler)
+	mux.HandleFunc("/battery", s.BatteryReportHandler)
+	mux.HandleFunc("/battery/status", s.BatteryStatusHandler)
+	mux.HandleFunc("/battery/history", s.BatteryHistoryHandler)
 
 	core.InfoLogger.Printf("Starting server on %s", addr)
 	return http.ListenAndServe(addr, mux)

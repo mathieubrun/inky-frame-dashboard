@@ -26,6 +26,6 @@ A centralized dashboard for managing the Inky Frame (Raspberry Pi Pico W) and ot
 ```bash
 ./inky serve --port 8080
 curl http://localhost:8080/version
-curl http://localhost:8080/api/v1/battery/status  # Get latest status (JSON)
-curl http://localhost:8080/api/v1/battery/history # Get full history (CSV)
+curl http://localhost:8080/battery/status  # Get latest status (JSON)
+curl http://localhost:8080/battery/history # Get full history (CSV)
 ```

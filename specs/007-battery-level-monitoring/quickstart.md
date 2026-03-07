@@ -11,7 +11,7 @@ inky serve --port 8080
 ### Report Battery (Manual Test)
 Simulate a device reporting battery level using `curl`:
 ```bash
-curl -X POST http://localhost:8080/api/v1/battery \
+curl -X POST http://localhost:8080/battery \
   -H "Content-Type: application/json" \
   -d '{"voltage": 3.75}'
 ```
@@ -19,7 +19,7 @@ curl -X POST http://localhost:8080/api/v1/battery \
 ### View History (Manual Test)
 Retrieve the recorded history:
 ```bash
-curl http://localhost:8080/api/v1/battery/history
+curl http://localhost:8080/battery/history
 ```
 
 ## Inky Frame (MicroPython)
@@ -35,7 +35,7 @@ def report_battery(server_url):
     conversion_factor = 3 * 3.3 / 65535
     voltage = adc.read_u16() * conversion_factor
     try:
-        r = urequests.post(f"{server_url}/api/v1/battery", json={"voltage": voltage})
+        r = urequests.post(f"{server_url}/battery", json={"voltage": voltage})
         r.close()
     except Exception as e:
         print(f"Failed to report battery: {e}")

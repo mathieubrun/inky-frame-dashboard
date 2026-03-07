@@ -1,7 +1,5 @@
 # API Contract: Battery Monitoring
 
-## Base Path: `/api/v1`
-
 ### POST `/battery`
 Report current battery voltage.
 

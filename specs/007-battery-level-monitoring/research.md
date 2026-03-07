@@ -8,10 +8,10 @@
 - **Format**: `Timestamp,Voltage` (e.g., `2026-03-07T12:00:00Z,3.75`). RFC3339 is standard and easy to parse.
 
 ### API Routes
-- **Endpoint 1**: `POST /api/v1/battery`
+- **Endpoint 1**: `POST /battery`
   - Payload: `{"voltage": 3.75}`
   - Status: 201 Created on success, 400 Bad Request on invalid input.
-- **Endpoint 2**: `GET /api/v1/battery/history`
+- **Endpoint 2**: `GET /battery/history`
   - Response: Raw CSV text (Content-Type: `text/plain`).
 
 ### MicroPython Implementation
