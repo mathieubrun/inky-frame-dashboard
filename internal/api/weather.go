@@ -50,7 +50,7 @@ func (s *Server) WeatherHandler(w http.ResponseWriter, r *http.Request) {
 	forecast, err := provider.GetForecast(city)
 	if err != nil {
 		core.ErrorLogger.Printf("Failed to retrieve weather for %s: %v", city, err)
-		
+
 		w.Header().Set("Content-Type", "application/json")
 		if strings.Contains(err.Error(), "city not found") {
 			w.WriteHeader(http.StatusNotFound)

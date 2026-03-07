@@ -23,9 +23,9 @@ func Execute() {
 
 func init() {
 	// Disable default --version flag to avoid conflict with the version subcommand if it were there,
-    // though cobra's default --version is only added if version field is set in rootCmd.
-    // However, the plan specifically says: "Global flag --version is explicitly excluded."
-    rootCmd.Flags().BoolP("version", "v", false, "display version")
-    _ = rootCmd.Flags().MarkHidden("version")
-    // Let's just make sure we don't use it.
+	// though cobra's default --version is only added if version field is set in rootCmd.
+	// However, the plan specifically says: "Global flag --version is explicitly excluded."
+	rootCmd.Flags().BoolP("version", "v", false, "display version")
+	_ = rootCmd.Flags().MarkHidden("version")
+	// Let's just make sure we don't use it.
 }

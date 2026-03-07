@@ -137,7 +137,7 @@ func printJSON(forecast *weather.WeatherForecast) {
 func printTable(forecast *weather.WeatherForecast) {
 	fmt.Printf("Weather for %s, %s (Source: MeteoSwiss via Open-Meteo)\n", forecast.Location.City, forecast.Location.Country)
 	fmt.Println("------------------------------------")
-	
+
 	cur := forecast.Current
 	fmt.Printf("Current: %.1f°C | Wind: %.1f km/h (%.0f°) | Rain: %.1f mm (%.0f%%)\n",
 		cur.Temperature, cur.WindSpeed, cur.WindDirection, cur.Precipitation, cur.PrecipitationProb)

@@ -94,7 +94,7 @@ func TestWeatherImageRenderer_Palette(t *testing.T) {
 
 func TestDrawWeatherIcon(t *testing.T) {
 	dc := gg.NewContext(100, 100)
-	
+
 	conditions := []string{"Sun", "Clear", "Cloudy", "Rain", "Unknown"}
 	for _, cond := range conditions {
 		t.Run(cond, func(t *testing.T) {

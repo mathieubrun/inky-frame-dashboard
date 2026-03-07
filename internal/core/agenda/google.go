@@ -30,12 +30,12 @@ func (p *GoogleCalendarProvider) Validate() error {
 	if p.credsPath == "" {
 		return fmt.Errorf("google credentials path is not configured")
 	}
-	
+
 	// Check if file exists
 	if _, err := os.Stat(p.credsPath); err != nil {
 		return fmt.Errorf("google credentials file not found at %s: %w", p.credsPath, err)
 	}
-	
+
 	return nil
 }
 

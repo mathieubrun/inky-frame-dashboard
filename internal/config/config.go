@@ -20,6 +20,7 @@ type Config struct {
 	AgendaMock           bool
 	AgendaCacheDir       string
 	AgendaCacheTTL       time.Duration
+	BatteryCSVPath       string
 }
 
 // Load loads the configuration from environment variables and flags.
@@ -36,12 +37,13 @@ func Load() (*Config, error) {
 	viper.SetDefault("agenda_mock", false)
 	viper.SetDefault("agenda_cache_dir", "./.inky/cache/agenda")
 	viper.SetDefault("agenda_cache_ttl", 15*time.Minute)
+	viper.SetDefault("battery_csv_path", "./.inky/battery.csv")
 
 	viper.SetConfigName(".env")
 	viper.SetConfigType("env")
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("./.inky")
-	
+
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			return nil, err
@@ -63,5 +65,6 @@ func Load() (*Config, error) {
 		AgendaMock:           viper.GetBool("agenda_mock"),
 		AgendaCacheDir:       viper.GetString("agenda_cache_dir"),
 		AgendaCacheTTL:       viper.GetDuration("agenda_cache_ttl"),
+		BatteryCSVPath:       viper.GetString("battery_csv_path"),
 	}, nil
 }

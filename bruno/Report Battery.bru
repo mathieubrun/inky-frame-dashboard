@@ -1,0 +1,21 @@
+meta {
+  name: Report Battery
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base_url}}/battery
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "voltage": 3.75
+  }
+}
+
+assert {
+  res.status: eq 201
+}

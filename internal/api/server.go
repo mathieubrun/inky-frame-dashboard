@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"inky-frame-dashboard/internal/config"
 	"inky-frame-dashboard/internal/core"
+	"inky-frame-dashboard/internal/core/battery"
 	"inky-frame-dashboard/internal/core/dashboard"
 	"inky-frame-dashboard/internal/core/weather"
 	"net/http"
@@ -15,15 +16,18 @@ type Server struct {
 	WeatherRenderer   *weather.WeatherImageRenderer
 	DashboardRenderer *dashboard.DashboardRenderer
 	ImageCache        *weather.WeatherImageCache
+	BatteryProcessor  *battery.Processor
 }
 
 // NewServer creates a new server instance.
 func NewServer(cfg *config.Config) *Server {
+	batteryStorage := battery.NewStorage(cfg.BatteryCSVPath)
 	return &Server{
 		Config:            cfg,
 		WeatherRenderer:   weather.NewWeatherImageRenderer(cfg.FontPath),
 		DashboardRenderer: dashboard.NewDashboardRenderer(cfg.FontPath),
 		ImageCache:        weather.NewWeatherImageCache(cfg.WeatherImageCacheDir, cfg.WeatherImageCacheTTL),
+		BatteryProcessor:  battery.NewProcessor(batteryStorage),
 	}
 }
 
@@ -36,6 +40,11 @@ func (s *Server) Start() error {
 	mux.HandleFunc("/weather/image", s.WeatherImageHandler)
 	mux.HandleFunc("/agenda", s.AgendaHandler)
 	mux.HandleFunc("/dashboard/image", s.DashboardImageHandler)
+
+	// Battery routes
+	mux.HandleFunc("/battery", s.BatteryReportHandler)
+	mux.HandleFunc("/battery/status", s.BatteryStatusHandler)
+	mux.HandleFunc("/battery/history", s.BatteryHistoryHandler)
 
 	core.InfoLogger.Printf("Starting server on %s", addr)
 	return http.ListenAndServe(addr, mux)

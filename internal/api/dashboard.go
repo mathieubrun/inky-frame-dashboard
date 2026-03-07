@@ -43,7 +43,7 @@ func (s *Server) DashboardImageHandler(w http.ResponseWriter, r *http.Request) {
 		wProvider = weather.NewOpenMeteoProvider()
 	}
 	wProvider = weather.NewCachedProvider(wProvider, s.Config.WeatherCacheDir, s.Config.WeatherCacheTTL)
-	
+
 	wForecast, err := wProvider.GetForecast(location)
 	if err != nil {
 		core.ErrorLogger.Printf("Dashboard: Failed to fetch weather: %v", err)

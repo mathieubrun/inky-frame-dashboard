@@ -40,7 +40,7 @@ var dashboardImageCmd = &cobra.Command{
 			wProvider = weather.NewOpenMeteoProvider()
 		}
 		wProvider = weather.NewCachedProvider(wProvider, cfg.WeatherCacheDir, cfg.WeatherCacheTTL)
-		
+
 		wForecast, err := wProvider.GetForecast(location)
 		if err != nil {
 			core.ErrorLogger.Printf("Dashboard: Failed to fetch weather: %v", err)

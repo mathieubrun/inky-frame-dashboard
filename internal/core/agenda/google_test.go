@@ -15,9 +15,9 @@ func TestGoogleCalendarProvider_GetAgenda(t *testing.T) {
 		resp := calendar.Events{
 			Items: []*calendar.Event{
 				{
-					Summary: "Test Event",
-					Start:   &calendar.EventDateTime{DateTime: "2026-03-06T10:00:00Z"},
-					End:     &calendar.EventDateTime{DateTime: "2026-03-06T11:00:00Z"},
+					Summary:  "Test Event",
+					Start:    &calendar.EventDateTime{DateTime: "2026-03-06T10:00:00Z"},
+					End:      &calendar.EventDateTime{DateTime: "2026-03-06T11:00:00Z"},
 					Location: "Test Location",
 				},
 			},
@@ -65,23 +65,23 @@ func TestParseGoogleTime(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "DateTime",
-			input: &calendar.EventDateTime{DateTime: "2026-03-06T10:00:00Z"},
+			name:    "DateTime",
+			input:   &calendar.EventDateTime{DateTime: "2026-03-06T10:00:00Z"},
 			wantErr: false,
 		},
 		{
-			name: "DateOnly",
-			input: &calendar.EventDateTime{Date: "2026-03-06"},
+			name:    "DateOnly",
+			input:   &calendar.EventDateTime{Date: "2026-03-06"},
 			wantErr: false,
 		},
 		{
-			name: "Nil",
-			input: nil,
+			name:    "Nil",
+			input:   nil,
 			wantErr: true,
 		},
 		{
-			name: "Empty",
-			input: &calendar.EventDateTime{},
+			name:    "Empty",
+			input:   &calendar.EventDateTime{},
 			wantErr: true,
 		},
 	}

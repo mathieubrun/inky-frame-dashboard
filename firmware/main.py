@@ -83,6 +83,19 @@ def connect_wifi(ssid, password, timeout=15):
     print(f"Connected. IP: {wlan.ifconfig()[0]}")
     return True
 
+def report_battery(url, voltage):
+    """Reports the current battery voltage to the server."""
+    print(f"Reporting battery voltage: {voltage:.2f}V to {url}")
+    try:
+        # Send a POST request with the battery data
+        response = urequests.post(url, json={"voltage": voltage}, timeout=10)
+        print(f"Battery report status: {response.status_code}")
+        response.close()
+        return response.status_code == 201
+    except Exception as e:
+        print(f"Battery report failed: {e}")
+        return False
+
 def sleep():
     """Puts the Inky Frame into deep sleep."""
     set_led("all", False) # Ensure all LEDs are off before sleep
@@ -181,7 +194,15 @@ def main():
             sleep()
             return
 
-        # 3. Fetch Image
+        # 3. Report Battery (Optional - failure doesn't block update)
+        try:
+            report_battery(env.BATTERY_URL, voltage)
+        except AttributeError:
+            print("BATTERY_URL not found in env.py, skipping report.")
+        except Exception as e:
+            print(f"Error calling report_battery: {e}")
+
+        # 4. Fetch Image
         gc.collect() # Free up memory before fetch
         if not fetch_image(env.DASHBOARD_URL, TEMP_IMAGE_FILE):
             print("Failed to fetch image. Sleeping.")

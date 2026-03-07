@@ -60,7 +60,7 @@ type geocodingResponse struct {
 func (p *OpenMeteoProvider) geocode(city string) (*Location, error) {
 	apiURL := fmt.Sprintf("%s?name=%s&count=1&language=en&format=json", p.geocodingURL, url.QueryEscape(city))
 	core.InfoLogger.Printf("Calling geocoding API: %s", apiURL)
-	
+
 	resp, err := p.httpClient.Get(apiURL)
 	if err != nil {
 		return nil, err

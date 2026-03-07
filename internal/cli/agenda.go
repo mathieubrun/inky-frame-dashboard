@@ -68,7 +68,7 @@ func printAgendaTable(forecast *agenda.AgendaForecast) {
 	fmt.Println("----------------------------------------------------------------------")
 	fmt.Printf("%-20s | %-30s | %s\n", "Time", "Summary", "Location")
 	fmt.Println("----------------------------------------------------------------------")
-	
+
 	for _, e := range forecast.Events {
 		timeStr := e.StartTime.Format("02 Jan 15:04")
 		fmt.Printf("%-20s | %-30s | %s\n", timeStr, e.Summary, e.Location)
