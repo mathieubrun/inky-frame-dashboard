@@ -63,7 +63,7 @@ func (r *DashboardRenderer) Render(wForecast *weather.WeatherForecast, aForecast
 
 func (r *DashboardRenderer) renderWeatherPanel(dc *gg.Context, forecast *weather.WeatherForecast) {
 	centerX := 200.0
-	
+
 	// City
 	dc.SetColor(core.InkyBlack)
 	if r.fontPath != "" {
@@ -92,14 +92,14 @@ func (r *DashboardRenderer) renderWeatherPanel(dc *gg.Context, forecast *weather
 func (r *DashboardRenderer) renderAgendaPanel(dc *gg.Context, forecast *agenda.AgendaForecast) {
 	startX := 420.0
 	startY := 60.0
-	
+
 	// Title
 	dc.SetColor(core.InkyBlack)
 	if r.fontPath != "" {
 		_ = dc.LoadFontFace(r.fontPath, 28)
 	}
 	dc.DrawString(fmt.Sprintf("Upcoming (%d)", len(forecast.Events)), startX, startY)
-	
+
 	dc.SetLineWidth(1)
 	dc.DrawLine(startX, startY+10, 780, startY+10)
 	dc.Stroke()
@@ -114,7 +114,7 @@ func (r *DashboardRenderer) renderAgendaPanel(dc *gg.Context, forecast *agenda.A
 		if i >= 8 {
 			break
 		}
-		
+
 		// Time
 		dc.SetColor(core.InkyBlue)
 		timeStr := e.StartTime.Format("15:04")
@@ -122,7 +122,7 @@ func (r *DashboardRenderer) renderAgendaPanel(dc *gg.Context, forecast *agenda.A
 			timeStr = e.StartTime.Format("02 Jan 15:04")
 		}
 		dc.DrawString(timeStr, startX, eventY)
-		
+
 		// Summary
 		dc.SetColor(core.InkyBlack)
 		// Truncate summary if too long
@@ -131,7 +131,7 @@ func (r *DashboardRenderer) renderAgendaPanel(dc *gg.Context, forecast *agenda.A
 			summary = summary[:22] + "..."
 		}
 		dc.DrawString(summary, startX+100, eventY)
-		
+
 		eventY += 45.0
 	}
 

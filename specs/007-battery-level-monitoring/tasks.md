@@ -22,10 +22,10 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Update `internal/config/config.go` to include `BatteryCSVPath` with default value `.inky/battery.csv`
-- [ ] T002 Update `internal/config/config.go` to load `BatteryCSVPath` from environment and flags
-- [ ] T003 Create directory `internal/core/battery/` for core logic
-- [ ] T004 [P] Create `bruno/` entries for battery endpoints
+- [X] T001 Update `internal/config/config.go` to include `BatteryCSVPath` with default value `.inky/battery.csv`
+- [X] T002 Update `internal/config/config.go` to load `BatteryCSVPath` from environment and flags
+- [X] T003 Create directory `internal/core/battery/` for core logic
+- [X] T004 [P] Create `bruno/` entries for battery endpoints
 
 ---
 
@@ -35,10 +35,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 [P] Define `BatteryReport` struct in `internal/core/battery/types.go`
-- [ ] T006 Implement thread-safe CSV append logic with `sync.Mutex` in `internal/core/battery/storage.go`
-- [ ] T007 [P] Implement CSV read logic in `internal/core/battery/storage.go`
-- [ ] T008 [P] Unit tests for CSV storage logic in `internal/core/battery/storage_test.go` (verify Mutex and format)
+- [X] T005 [P] Define `BatteryReport` struct in `internal/core/battery/types.go`
+- [X] T006 Implement thread-safe CSV append logic with `sync.Mutex` in `internal/core/battery/storage.go`
+- [X] T007 [P] Implement CSV read logic in `internal/core/battery/storage.go`
+- [X] T008 [P] Unit tests for CSV storage logic in `internal/core/battery/storage_test.go` (verify Mutex and format)
 
 **Checkpoint**: Foundation ready - battery storage and retrieval logic is verified.
 
@@ -52,17 +52,17 @@
 
 ### Tests for User Story 1 (REQUIRED) ⚠️
 
-- [ ] T009 [P] [US1] Unit test for report validation logic in `internal/core/battery/battery_test.go`
-- [ ] T010 [P] [US1] Integration test for POST handler in `internal/api/battery_test.go`
-- [ ] T011 [P] [US1] Create Bruno file `bruno/Report Battery.bru` with POST example
-- [ ] T012 [P] [US1] Verify coverage >80% for US1 logic (`go test ./internal/core/battery/... ./internal/api/... -cover`)
+- [X] T009 [P] [US1] Unit test for report validation logic in `internal/core/battery/battery_test.go`
+- [X] T010 [P] [US1] Integration test for POST handler in `internal/api/battery_test.go`
+- [X] T011 [P] [US1] Create Bruno file `bruno/Report Battery.bru` with POST example
+- [X] T012 [P] [US1] Verify coverage >80% for US1 logic (`go test ./internal/core/battery/... ./internal/api/... -cover`)
 
 ### Implementation for User Story 1
 
-- [ ] T013 [P] [US1] Implement report validation and processing in `internal/core/battery/battery.go`
-- [ ] T014 [US1] Implement `BatteryReportHandler` (POST) in `internal/api/battery.go`
-- [ ] T015 [US1] Register POST `/api/v1/battery` route in `internal/api/server.go`
-- [ ] T016 [US1] Add logging for received battery reports in `internal/api/battery.go`
+- [X] T013 [P] [US1] Implement report validation and processing in `internal/core/battery/battery.go`
+- [X] T014 [US1] Implement `BatteryReportHandler` (POST) in `internal/api/battery.go`
+- [X] T015 [US1] Register POST `/api/v1/battery` route in `internal/api/server.go`
+- [X] T016 [US1] Add logging for received battery reports in `internal/api/battery.go`
 
 **Checkpoint**: User Story 1 is functional. Devices can report battery levels.
 
@@ -76,16 +76,16 @@
 
 ### Tests for User Story 2 (REQUIRED) ⚠️
 
-- [ ] T017 [P] [US2] Unit test for "get latest" logic in `internal/core/battery/storage_test.go`
-- [ ] T018 [P] [US2] Integration test for GET status handler in `internal/api/battery_test.go`
-- [ ] T019 [P] [US2] Create Bruno file `bruno/Get Battery Status.bru`
-- [ ] T020 [P] [US2] Verify coverage >80% for US2 logic
+- [X] T017 [P] [US2] Unit test for "get latest" logic in `internal/core/battery/storage_test.go`
+- [X] T018 [P] [US2] Integration test for GET status handler in `internal/api/battery_test.go`
+- [X] T019 [P] [US2] Create Bruno file `bruno/Get Battery Status.bru`
+- [X] T020 [P] [US2] Verify coverage >80% for US2 logic
 
 ### Implementation for User Story 2
 
-- [ ] T021 [P] [US2] Implement `GetLatestReport` logic in `internal/core/battery/storage.go`
-- [ ] T022 [US2] Implement `BatteryStatusHandler` (GET) in `internal/api/battery.go` returning JSON
-- [ ] T023 [US2] Register GET `/api/v1/battery/status` route in `internal/api/server.go`
+- [X] T021 [P] [US2] Implement `GetLatestReport` logic in `internal/core/battery/storage.go`
+- [X] T022 [US2] Implement `BatteryStatusHandler` (GET) in `internal/api/battery.go` returning JSON
+- [X] T023 [US2] Register GET `/api/v1/battery/status` route in `internal/api/server.go`
 
 **Checkpoint**: User Story 2 is functional. Latest battery status is accessible via API.
 
@@ -99,19 +99,19 @@
 
 ### Tests for User Story 3 (REQUIRED) ⚠️
 
-- [ ] T024 [P] [US3] Unit test for "get history" logic in `internal/core/battery/storage_test.go`
-- [ ] T025 [P] [US3] Integration test for GET history handler in `internal/api/battery_test.go`
-- [ ] T026 [P] [US3] Functional test for CLI command in `internal/cli/battery_test.go`
-- [ ] T027 [P] [US3] Create Bruno file `bruno/Get Battery History.bru`
-- [ ] T028 [P] [US3] Verify coverage >80% for US3 logic
+- [X] T024 [P] [US3] Unit test for "get history" logic in `internal/core/battery/storage_test.go`
+- [X] T025 [P] [US3] Integration test for GET history handler in `internal/api/battery_test.go`
+- [X] T026 [P] [US3] Functional test for CLI command in `internal/cli/battery_test.go`
+- [X] T027 [P] [US3] Create Bruno file `bruno/Get Battery History.bru`
+- [X] T028 [P] [US3] Verify coverage >80% for US3 logic
 
 ### Implementation for User Story 3
 
-- [ ] T029 [P] [US3] Implement `GetHistoryRaw` logic in `internal/core/battery/storage.go`
-- [ ] T030 [US3] Implement `BatteryHistoryHandler` (GET) in `internal/api/battery.go` returning raw text
-- [ ] T031 [US3] Register GET `/api/v1/battery/history` route in `internal/api/server.go`
-- [ ] T032 [US3] Implement `battery` command and `history` subcommand in `internal/cli/battery.go`
-- [ ] T033 [US3] Implement `clear` subcommand in `internal/cli/battery.go` to reset CSV
+- [X] T029 [P] [US3] Implement `GetHistoryRaw` logic in `internal/core/battery/storage.go`
+- [X] T030 [US3] Implement `BatteryHistoryHandler` (GET) in `internal/api/battery.go` returning raw text
+- [X] T031 [US3] Register GET `/api/v1/battery/history` route in `internal/api/server.go`
+- [X] T032 [US3] Implement `battery` command and `history` subcommand in `internal/cli/battery.go`
+- [X] T033 [US3] Implement `clear` subcommand in `internal/cli/battery.go` to reset CSV
 
 **Checkpoint**: User Story 3 is functional. History is accessible via API and CLI.
 
@@ -121,9 +121,9 @@
 
 **Purpose**: Update the MicroPython code to actually report the battery level.
 
-- [ ] T034 [US1] Add `report_battery` function to `firmware/main.py`
-- [ ] T035 [US1] Integrate `report_battery` call before dashboard update in `firmware/main.py`
-- [ ] T036 [US1] Add configuration for API URL in `firmware/env.template.py`
+- [X] T034 [US1] Add `report_battery` function to `firmware/main.py`
+- [X] T035 [US1] Integrate `report_battery` call before dashboard update in `firmware/main.py`
+- [X] T036 [US1] Add configuration for API URL in `firmware/env.template.py`
 
 ---
 
@@ -131,10 +131,10 @@
 
 **Purpose**: Improvements and final validation
 
-- [ ] T037 [P] Update `README.md` with battery monitoring API details
-- [ ] T038 Final code cleanup and `gofmt` verification
-- [ ] T039 [P] Final verification of project-wide test coverage (>80%)
-- [ ] T040 Run `quickstart.md` validation steps
+- [X] T037 [P] Update `README.md` with battery monitoring API details
+- [X] T038 Final code cleanup and `gofmt` verification
+- [X] T039 [P] Final verification of project-wide test coverage (>80%)
+- [X] T040 Run `quickstart.md` validation steps
 
 ---
 

@@ -12,14 +12,20 @@ A centralized dashboard for managing the Inky Frame (Raspberry Pi Pico W) and ot
 
 ## Features
 - Retrieve application version via CLI and API.
+- Battery level monitoring for Inky Frame devices.
+- Persistent battery history in CSV format.
 
 ## CLI Usage
 ```bash
 ./inky version
+./inky battery history # View full history
+./inky battery clear   # Reset history
 ```
 
 ## API Usage
 ```bash
 ./inky serve --port 8080
 curl http://localhost:8080/version
+curl http://localhost:8080/api/v1/battery/status  # Get latest status (JSON)
+curl http://localhost:8080/api/v1/battery/history # Get full history (CSV)
 ```

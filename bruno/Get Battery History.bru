@@ -1,0 +1,16 @@
+meta {
+  name: Get Battery History
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{base_url}}/api/v1/battery/history
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.headers["content-type"]: contains text/plain
+}

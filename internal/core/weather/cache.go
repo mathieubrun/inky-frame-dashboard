@@ -82,16 +82,16 @@ func (c *WeatherImageCache) GenerateKey(city string, width, height int, palette 
 // GetImage returns a cached image if it exists and is fresh.
 func (c *WeatherImageCache) GetImage(key string) ([]byte, error) {
 	filename := filepath.Join(c.cacheDir, key+".png")
-	
+
 	info, err := os.Stat(filename)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	if time.Since(info.ModTime()) > c.ttl {
 		return nil, fmt.Errorf("cache entry for image %s is stale", key)
 	}
-	
+
 	return os.ReadFile(filename)
 }
 
@@ -100,7 +100,7 @@ func (c *WeatherImageCache) SaveImage(key string, data []byte) error {
 	if err := os.MkdirAll(c.cacheDir, 0755); err != nil {
 		return err
 	}
-	
+
 	filename := filepath.Join(c.cacheDir, key+".png")
 	return os.WriteFile(filename, data, 0644)
 }

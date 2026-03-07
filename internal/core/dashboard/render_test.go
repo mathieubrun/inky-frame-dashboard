@@ -13,8 +13,8 @@ import (
 
 func TestDashboardRenderer_Render(t *testing.T) {
 	wForecast := &weather.WeatherForecast{
-		Location: weather.Location{City: "Zurich"},
-		Current:  weather.WeatherRecord{Temperature: 22.5, Condition: "Clear sky"},
+		Location:  weather.Location{City: "Zurich"},
+		Current:   weather.WeatherRecord{Temperature: 22.5, Condition: "Clear sky"},
 		FetchedAt: time.Now(),
 	}
 

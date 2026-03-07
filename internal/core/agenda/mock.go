@@ -16,10 +16,10 @@ func NewMockCalendarProvider() *MockCalendarProvider {
 // GetAgenda returns a set of mock events.
 func (p *MockCalendarProvider) GetAgenda(calendarID string, count int) (*AgendaForecast, error) {
 	now := time.Now()
-	
+
 	// Create some mock events
 	events := make([]AgendaEvent, 0, count)
-	
+
 	titles := []string{
 		"Morning Standup",
 		"Project Review",
@@ -30,7 +30,7 @@ func (p *MockCalendarProvider) GetAgenda(calendarID string, count int) (*AgendaF
 		"Dinner with Family",
 		"Evening Walk",
 	}
-	
+
 	locations := []string{
 		"Meeting Room A",
 		"Conference Hall",
@@ -47,11 +47,11 @@ func (p *MockCalendarProvider) GetAgenda(calendarID string, count int) (*AgendaF
 		if i >= len(titles) {
 			title = fmt.Sprintf("%s %d", title, i/len(titles)+1)
 		}
-		
+
 		startTime := now.Add(time.Duration(i+1) * time.Hour)
 		// Round to nearest 15 mins for cleaner look
 		startTime = startTime.Truncate(15 * time.Minute)
-		
+
 		events = append(events, AgendaEvent{
 			Summary:   title,
 			StartTime: startTime,
