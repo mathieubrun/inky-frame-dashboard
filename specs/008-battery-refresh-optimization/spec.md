@@ -3,7 +3,11 @@
 **Feature Branch**: `008-battery-refresh-optimization`
 **Created**: 2026-03-07
 **Status**: Draft
-**Input**: User description: "in order to preserve battery, the number of screen refreshes must be limited. Only refresh if the dashboard image has changed. The weather data is refreshed every day at 04:00. Calendar data is refreshed when calendar is updated."
+## Input: User description: "in order to preserve battery, the number of screen refreshes must be limited. Only refresh if the dashboard image has changed. The weather data is refreshed every day at 04:00. Calendar data is refreshed when calendar is updated."
+
+## Clarifications
+### Session 2026-03-07
+- Q: How does the server detect if the calendar is updated? → A: When the inky frame makes a request, the server checks google calendar.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -65,7 +69,7 @@ As a user, I want my dashboard to refresh whenever my calendar is updated so tha
 - **FR-001**: The system MUST provide a mechanism to detect if the dashboard image has changed since the last delivery to the device (e.g., via ETag or Hash).
 - **FR-002**: The device MUST only perform a physical screen refresh if the server indicates new content is available.
 - **FR-003**: The server MUST refresh weather data precisely once per day at 04:00 local time.
-- **FR-004**: The system MUST trigger a dashboard update when new calendar events are detected or existing ones are modified.
+- **FR-004**: The server MUST fetch fresh calendar data from Google Calendar during every device request to determine if an update is needed.
 - **FR-005**: The server MUST maintain a record of the last "significant" image hash sent to the device.
 - **FR-006**: The device MUST strictly enforce a 60-minute wake interval to check for these changes.
 
