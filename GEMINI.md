@@ -28,9 +28,9 @@ tests/
 Go (Golang) 1.22+: Follow standard conventions
 
 ## Recent Changes
+- 008-battery-refresh-optimization: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper
 - 007-battery-level-monitoring: Added Go (Golang) 1.22+ + net/http, spf13/cobra, viper
 - 006-google-agenda-display: Added Go (Golang) 1.22+
-- 005-inky-display-image: Added MicroPython (Pimoroni Firmware for RP2040) + inky_frame, picographics, pngdec, network, urequests, machine (ADC)
 
 
 <!-- MANUAL ADDITIONS START -->
